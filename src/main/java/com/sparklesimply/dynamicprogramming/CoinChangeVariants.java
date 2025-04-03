@@ -15,7 +15,7 @@ public class CoinChangeVariants {
      * @param amount :  integer array coins representing coins of different denominations
      * @return : fewest number of coins that you need to make up that amount
      */
-    public static int coinChange(int[] coins, int amount) {
+    public int coinChange(int[] coins, int amount) {
         int[] dp = new int[amount+1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
@@ -51,7 +51,7 @@ public class CoinChangeVariants {
      * @param coins :  integer array coins representing coins of different denominations
      * @return : integer (the number) of combinations that make up that amount
      */
-    public static int change(int amount, int[] coins) {
+    public int change(int amount, int[] coins) {
         int[] dp = new int[amount+1];
         // base scenario when target sum is 0, only 1 way to consider to not include the coin
         dp[0] = 1;
@@ -94,7 +94,7 @@ public class CoinChangeVariants {
      * @param n : target n
      * @return : the least number of perfect square numbers that sum to n
      */
-    public static int numSquares(int n) {
+    public int numSquares(int n) {
         int[] dp = new int[n+1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
@@ -121,7 +121,7 @@ public class CoinChangeVariants {
      * a 30-day pass is sold for costs[2] dollars.
      * @return : the minimum number of dollars you need to travel every day in the given list of days
      */
-    public static int mincostTickets(int[] days, int[] costs) {
+    public int mincostTickets(int[] days, int[] costs) {
         int totalDays = days[days.length-1];
         boolean[] travelDays = new boolean[totalDays+1];
 
