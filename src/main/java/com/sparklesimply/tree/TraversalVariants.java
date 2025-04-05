@@ -1,4 +1,4 @@
-package com.sparklesimply.trees;
+package com.sparklesimply.tree;
 
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
@@ -108,7 +108,7 @@ public class TraversalVariants {
         if(prev != null && prev.data > root.data) {
             if(first == null) {
                 first = prev;
-                middle = root
+                middle = root;
             } else {
                 last = root;
             }

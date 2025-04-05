@@ -1,4 +1,4 @@
-package com.sparklesimply.trees;
+package com.sparklesimply.tree;
 
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
