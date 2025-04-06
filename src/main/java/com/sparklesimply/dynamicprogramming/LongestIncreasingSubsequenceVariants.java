@@ -1,6 +1,7 @@
 package com.sparklesimply.dynamicprogramming;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LongestIncreasingSubsequenceVariants {
@@ -36,5 +37,42 @@ public class LongestIncreasingSubsequenceVariants {
             }
         }
         return dp.size();
+    }
+
+    /**
+     * This method return the list of largest divisible set such that nums[i]%nums[j]==0 or vice versa
+     * Here, we'll sort to have elements in increasing order as lower numbers are easily divisible to greater numbers
+     * we'll maintain dp array to have the maximum length of divisible subset until index i, dp[i] = d[j]+1 if nums[i]%nums[j]==0
+     * also prev array maintained will backtrack to have the list of elements that are divisible
+     * Time Complexity: O(n^2)
+     *
+     * @param nums
+     * @return
+     */
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        int[] dp = new int[n];
+        int[] prev = new int[n];
+        Arrays.fill(prev, -1);
+        int maxIndex = 0;
+        List<Integer> result = new ArrayList<Integer>();
+        for(int i=1; i<n; i++) {
+            for(int j=0; j<i; j++) {
+                if(nums[i]%nums[j] == 0 && dp[i] < dp[j]+1) {
+                    dp[i] = dp[j]+1;
+                    prev[i] = j;
+                }
+            }
+            if(dp[i] > dp[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        while(maxIndex >= 0) {
+            result.add(nums[maxIndex]);
+            maxIndex = prev[maxIndex];
+
+        }
+        return result;
     }
 }
