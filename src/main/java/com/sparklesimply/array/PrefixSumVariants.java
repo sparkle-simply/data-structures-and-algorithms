@@ -60,7 +60,39 @@ public class PrefixSumVariants {
         return count;
     }
 
-    public int maxSubArrayLengthWIthSumZero(int[] nums) {
+    /**
+     * This method will return the max length of sub array with sum k
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int maxSubArrayLengthWithSunK(int[] nums, int k) {
+        int n = nums.length;
+        int maxLen = 0, sum = 0;
+        HashMap<Integer, Integer> prefixSum = new HashMap<>();
+        for(int i=0; i<n; i++) {
+            sum += nums[i];
+            if(sum == k)
+                maxLen = i+1;
+            // checking id we encountered <prevsum+k=sum>, implies that we encountered sub array values making sum k
+            Integer prevSumIndex = prefixSum.get(sum - k);
+            if(prevSumIndex != null) {
+                maxLen = Math.max(maxLen,i-prevSumIndex);
+            }
+
+            if(!prefixSum.containsKey(sum)) {
+                prefixSum.put(sum, i);
+            }
+        }
+        return maxLen;
+    }
+
+    /**
+     * This method will return the max length of sub array with sum k
+     * @param nums
+     * @return
+     */
+    public int maxSubArrayLengthWithSumZero(int[] nums) {
         int n = nums.length;
         HashMap<Integer, Integer> map = new HashMap<>();
         int sum = 0;
@@ -70,6 +102,7 @@ public class PrefixSumVariants {
             if(sum == 0)
                 maxLen = i+1;
             Integer prevIndex = map.get(sum);
+            // checking is tracking sum in encountered again, implying that we have sub array making sum further zero
             if(prevIndex != null) {
                 maxLen = Math.max(maxLen, i-prevIndex);
             } else {

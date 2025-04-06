@@ -107,43 +107,4 @@ public class CoinChangeVariants {
         }
         return dp[n];
     }
-
-    /**
-     * This method return the minimum number of dollars you need to travel every day in the given list of days
-     * Note: each travel day has a "cost state" influenced by the costs of previous days
-     * to check for each travel day, which ticket (1-day, 7-day, or 30-day) provides the lowest cost
-     * constructing the solution iteratively using a dp array, optimal decisions for all travel days can be evaluated
-     *
-     * @param days : days of the year in which you will travel are given as an integer array days, each day is an integer from 1 to 365
-     * @param costs : train tickets sold in three different ways,
-     * a 1-day pass is sold for costs[0] dollars,
-     * a 7-day pass is sold for costs[1] dollars, and
-     * a 30-day pass is sold for costs[2] dollars.
-     * @return : the minimum number of dollars you need to travel every day in the given list of days
-     */
-    public int mincostTickets(int[] days, int[] costs) {
-        int totalDays = days[days.length-1];
-        boolean[] travelDays = new boolean[totalDays+1];
-
-        for(int day : days) {
-            travelDays[day] = true;
-        }
-
-        int[] dp = new int[totalDays+1];
-        dp[0] = 0;
-
-        for(int i=1; i<=totalDays; i++) {
-            // if it's not a travel day, the cost is same a previous day
-            if(!travelDays[i]) {
-                dp[i] = dp[i-1];
-                continue;
-            }
-            // if it's travel day, evaluate cost state for travel day
-            // consider minimum of 1-day, 7-day and 30-day pass
-            dp[i] = dp[i-1] + costs[0];
-            dp[i] = Math.min(dp[Math.max(0, i-7)] + costs[1], dp[i]);
-            dp[i] = Math.min(dp[Math.max(0, i-30)] + costs[2], dp[i]);
-        }
-        return dp[totalDays];
-    }
 }
