@@ -2,6 +2,9 @@ package com.sparklesimply.array;
 
 import java.util.HashMap;
 
+/**
+ * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
+ */
 public class PrefixSumVariants {
 
     /**
@@ -48,7 +51,7 @@ public class PrefixSumVariants {
             // checking if sum until now is equal to k
             if(prefixSum[i] == k)
                 count++;
-            // checking if there are prev sums which constitute to sub array ofsum k
+            // checking if there are prev sums which constitute to sub array of sum k
             int prevSum = prefixSum[i] - k;
             if(prefixSumFrequency.containsKey(prevSum)) {
                 count = count + prefixSumFrequency.get(prevSum);

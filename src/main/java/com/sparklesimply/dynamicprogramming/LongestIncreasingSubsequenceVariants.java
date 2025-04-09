@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
+ */
 public class LongestIncreasingSubsequenceVariants {
 
     /**
      * This method returns the max length of longest increasing subsequence using dp tabulation approach
+     * Time complexity: O(n log n)
      * @param nums
      * @return max length of longest increasing subsequence
      */

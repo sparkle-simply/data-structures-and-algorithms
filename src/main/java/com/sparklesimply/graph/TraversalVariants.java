@@ -2,6 +2,9 @@ package com.sparklesimply.graph;
 
 import java.util.*;
 
+/**
+ * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
+ */
 public class TraversalVariants {
 
     /**
