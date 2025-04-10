@@ -1,5 +1,7 @@
 package com.sparklesimply.dynamicprogramming;
 
+import java.util.List;
+
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
  */
@@ -102,5 +104,144 @@ public class MaximizeMinimizeVariants {
 
         System.out.println("Max Earnings: "+maxEarnings);
         return new String(schedule);
+    }
+
+    /**
+     * Problem statement: You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
+     * Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+     * Approach:
+     * If we rob ith index, then you won't be able to rob (i-1)th index because of the constraint provided
+     * If we skip robbing ith index, then robbed amount until now is same as (i-1)th index
+     * iteratively we can compute for n houses, if n=1 amount will be nums[0] and if n=2 then amount will be max of nums[0] and nums[1]
+     * Time complexity: O(n)
+     * @param nums amount in n houses
+     * @return maximum amount as part of robbing houses
+     */
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if(n == 1)
+            return nums[0];
+        int[] dp = new int [n];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for(int i=2; i<n; i++) {
+            dp[i] = Math.max(dp[i-1], nums[i]+dp[i-2]);
+        }
+        return dp[n-1];
+    }
+
+    /**
+     * Problem statement: Given a triangle array, return the minimum path sum from top to bottom.
+     * For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, you may move to either index i or index i + 1 on the next row.
+     * triangle = [[2],[3,4],[6,5,7],[4,1,8,3]], minimum path sum from top to bottom is 2 + 3 + 5 + 1 = 11
+     * Approach:
+     * create a 1D array dp of size n to store the minimum path sum starting from the bottom, there's nowhere to go, so the minimum path starting from each element there is the element itself
+     * we process the triangle from bottom to top, starting at the second-last row (n - 2)
+     * for each element in that row: add its value to the minimum of the two possible paths below it (either straight down dp[col] or diagonally right dp[col + 1]), overwrite dp[col] with the new minimum sum at that position
+     * @param triangle array
+     * @return minimum sun from top to bottom of triangle array
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int[] dp = new int[n];
+        for(int i=0; i<n; i++)
+            dp[i] = triangle.get(n-1).get(i); // from bottom row there is nowhere to go further to calculate minimum sum
+        for(int row=n-2; row>=0;row--) {
+            for(int col=0; col<=row; col++) {
+                dp[col] = triangle.get(row).get(col) + Math.min(dp[col], dp[col+1]);
+            }
+        }
+        return dp[0];
+    }
+
+    /**
+     * Given m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+     * Note: You can only move either down or right at any point in time.
+     * @param grid array
+     * @return minimum path sum from top left to bottom right
+     */
+    public int minPathSum(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] dp = new int[m][n];
+
+        dp[0][0] = grid[0][0];
+
+        for(int j=1; j<n; j++)
+            dp[0][j] = dp[0][j-1] + grid[0][j];
+
+        for(int i=1; i<m; i++)
+            dp[i][0] = dp[i-1][0] + grid[i][0];
+
+        for(int i=1; i<m; i++) {
+            for(int j=1; j<n; j++) {
+                dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
+            }
+        }
+
+        return dp[m-1][n-1];
+    }
+
+    /**
+     * Problem statement: Given two strings word1 and word2, return the minimum number of operations required to convert word1 to word2.
+     * You have the following three operations permitted on a word:
+     * Insert a character
+     * Delete a character
+     * Replace a character
+     * Approach: dp[i][j] as the minimum number of operations required to convert the first i characters of word1 to the first j characters of word2
+     * For each dp[i][j], we have three possible operations to consider:
+     * Insertion: If we insert a character in word1 to match word2[j-1], the cost will be dp[i][j-1] + 1.
+     * Deletion: If we delete a character from word1 to match word2[j-1], the cost will be dp[i-1][j] + 1.
+     * Replacement: If we replace the character in word1[i-1] with word2[j-1], the cost will be dp[i-1][j-1] + (word1[i-1] == word2[j-1] ? 0 : 1) (if characters are the same, no replacement is needed).
+     * Time complexity: O(m*n)
+     * @param word1 word1
+     * @param word2 word2
+     * @return minimum number of operations to convert word1 to word2
+     */
+    public int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+        int[][] dp = new int[m+1][n+1];
+
+        for(int i=0; i<=m; i++)
+            dp[i][0] = i; // deleting all characters in word1 to convert empty word2 string
+        for(int j=1; j<=n; j++)
+            dp[0][j] = j; // adding all characters to word1 to convert to non-empty word2 string
+        for(int i=1; i<=m; i++) {
+            for(int j=1; j<=n; j++) {
+                if(word1.charAt(i-1)==word2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1]; // no replacement
+                } else {
+                    dp[i][j] = Math.min(Math.min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1]) + 1;
+                }
+            }
+        }
+        return dp[m][n];
+    }
+
+    /**
+     * Problem statement: Given an m x n binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+     * Approach:
+     * use dp, where  dp[i][j] represent the side length of the largest square that ends at position (i, j) in the matrix
+     * if the value at matrix[i][j] is 1, then we check the squares formed by the neighboring cells to its left (dp[i][j-1]), top (dp[i-1][j]), and top-left diagonal (dp[i-1][j-1]). The square size at (i, j) will be the minimum of the three neighbors plus 1
+     * Time complexity: O(m*n)
+     * @param matrix
+     * @return
+     */
+    public int maximalSquare(char[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] dp = new int[m+1][n+1];
+        int maxSide = 0;
+        for(int i=1; i<=m; i++) {
+            for(int j=1; j<=n; j++) {
+                if(matrix[i-1][j-1] == '1') {
+                    dp[i][j] = Math.min(Math.min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1]) + 1;
+                    maxSide = Math.max(maxSide, dp[i][j]);
+                }
+
+            }
+        }
+        return maxSide*maxSide;
     }
 }
