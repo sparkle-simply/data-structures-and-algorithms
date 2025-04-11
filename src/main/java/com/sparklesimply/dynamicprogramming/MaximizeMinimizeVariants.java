@@ -244,4 +244,80 @@ public class MaximizeMinimizeVariants {
         }
         return maxSide*maxSide;
     }
+
+    /**
+     * Problem statement: You are given an array prices where prices[i] is the price of a given stock on the ith day.
+     * Find the maximum profit you can achieve. You may complete at most two transactions.
+     * Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+     * Approach:
+     * to keep track of the maximum profit achievable with up to two transactions
+     * leftProfit[i]: max profit achievable with one transaction from day 0 to i
+     * rightProfits[i]: max profit achievable with one transaction from day i to the end
+     * add these profits for day to find the best possible combination of two transactions
+     * Time complexity O(n)
+     * @param prices array
+     * @return max profit
+     */
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int[] leftProfit = new int[n];
+        int[] rightProfit = new int[n+1];
+        int minPrice = prices[0];
+        int maxPrice = prices[n-1];
+        // getting profit if stock is bought on or before ith day
+        for(int i=1; i<n; i++) {
+            minPrice = Math.min(minPrice, prices[i]);
+            leftProfit[i] = Math.max(leftProfit[i-1], prices[i]-minPrice);
+        }
+        // getting profit if stock is sold on or after ith day
+        for(int i=n-2; i>=0; i--) {
+            maxPrice = Math.max(maxPrice, prices[i]);
+            rightProfit[i] = Math.max(rightProfit[i+1], maxPrice-prices[i]);
+        }
+        // combining both transactions to get max profit
+        int maxProfit = 0;
+        for(int i=0; i<n; i++) {
+            maxProfit = Math.max(maxProfit, leftProfit[i]+rightProfit[i+1]);
+        }
+        return maxProfit;
+    }
+
+    /**
+     * Problem statement: You are given an integer array prices where prices[i] is the price of a given stock on the ith day, and an integer k.
+     * Find the maximum profit you can achieve. You may complete at most k transactions: i.e. you may buy at most k times and sell at most k times.
+     * Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+     * Approach: track the maximum profit for up to k transactions, by updating daily profits based on the best past buy opportunity (maxDiff), we get the maximum profit
+     * Time complexity: O(n*k)
+     * @param k transactions
+     * @param prices array
+     * @return max profit
+     */
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        // checking if there is infinite transactions
+        if(k >= n/2) {
+            int profit = 0;
+            for(int i=1; i<n; i++) {
+                if(prices[i] > prices[i-1]) {
+                    profit += prices[i] - prices[i-1];
+                }
+            }
+            return profit;
+        }
+
+        int[] prev = new int[n];
+        int[] curr = new int[n];
+        for(int t=1; t<=k; t++) {
+            int maxDiff = -prices[0];
+            for(int d=1; d<n; d++) {
+                // carry over yesterday’s profit: curr[d - 1] or sell at (prices[d]) + the best possible previous profit (maxDiff)
+                curr[d] = Math.max(curr[d-1], prices[d] + maxDiff);
+                // best opportunity to buy in the past, if buy on some earlier day, which one gives me the best total profit if seel today
+                maxDiff = Math.max(maxDiff, prev[d] - prices[d]);
+            }
+
+            System.arraycopy(curr, 0, prev, 0, n);
+        }
+        return prev[n-1];
+    }
 }
