@@ -193,4 +193,51 @@ public class TraversalVariants {
         }
         return true;
     }
+
+    /**
+     * Problem statement: In a gold mine grid of size m x n, each cell in this mine has an integer representing the amount of gold in that cell, 0 if it is empty.
+     * Return the maximum amount of gold you can collect under the conditions:
+     * Every time you are located in a cell you will collect all the gold in that cell.
+     * From your position, you can walk one step to the left, right, up, or down.
+     * You can't visit the same cell more than once.
+     * Never visit a cell with 0 gold.
+     * You can start and stop collecting gold from any position in the grid that has some gold.
+     * Approach:
+     * using dfs approach with backtracking to explore every possible path and find the maximum gold collected
+     * Time complexity: O(m*n)
+     * @param grid array
+     * @return maximum gold collected
+     */
+    public int getMaximumGold(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+//        result[0] stores the global maximum gold collected, which is updated whenever a better (larger) total gold is found
+//        result[1] temporarily holds the current sum of collected gold for the current path
+        int[] result = new int[2];
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++)
+                dfs(grid, m, n, i, j, result);
+        }
+        return result[0];
+    }
+    void dfs(int[][] grid, int m, int n, int i, int j, int[] result) {
+        if(i<0 || i>=m || j<0 || j>=n || grid[i][j] == 0)
+            return;
+        int temp = grid[i][j];
+        grid[i][j] = 0; // marking current position as visited
+        // computing current gold sum
+        result[1] = result[1] + temp;
+        // computing current maximum gold sum
+        result[0] = Math.max(result[0], result[1]);
+
+        dfs(grid, m, n, i+1, j, result);
+        dfs(grid, m, n, i-1, j, result);
+        dfs(grid, m, n, i, j+1, result);
+        dfs(grid, m, n, i, j-1, result);
+
+        // resetting the current grid and sum value
+        grid[i][j] = temp;
+        result[1] = result[1] - temp;
+    }
 }

@@ -1,5 +1,7 @@
 package com.sparklesimply.tree;
 
+import java.util.*;
+
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
  */
@@ -115,5 +117,42 @@ public class TraversalVariants {
         }
         prev = root;
         fixBSTSwapNodesUtil(root.right);
+    }
+
+    /**
+     * Problem statement: A forest is represented with a hashmap. This hashmap has this key -> value relationship: child -> parent.
+     * Every node has a unique integer element. I needed to find out the largest tree's root node. If there is a tie, return the smallest root.
+     * Time complexity: O(m+n), m nodes and n edges
+     * @param forest group of trees
+     * @return largest tree root node
+     */
+    public int largestTreeRootNode(HashMap<Integer, Integer> forest) {
+        // getting all child nodes
+        Set<Integer> childNodes = new HashSet<>(forest.keySet());
+        // getting all nodes
+        Set<Integer> allNodes = new HashSet<>(forest.values());
+        // extracting root nodes from all nodes
+        Set<Integer> rootNodes = new HashSet<>(allNodes);
+        rootNodes.removeAll(childNodes);
+        // checking all roots and their size
+        int largestTreeRoot = Integer.MIN_VALUE;
+        int maxTreeSize = 0;
+        for(Integer root : rootNodes) {
+            int treeSize = dfs(root, forest);
+            if((maxTreeSize < treeSize) || (maxTreeSize == treeSize && root < largestTreeRoot)) {
+                largestTreeRoot = root;
+                maxTreeSize = treeSize;
+            }
+        }
+        return largestTreeRoot;
+    }
+    private int dfs(Integer root, HashMap<Integer, Integer> forest) {
+        int size = 1; // root itself
+        for(Map.Entry<Integer, Integer> entry : forest.entrySet()) {
+            if(Objects.equals(entry.getValue(), root)) {
+                size += dfs(entry.getKey(), forest);
+            }
+        }
+        return size;
     }
 }

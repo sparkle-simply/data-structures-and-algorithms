@@ -312,7 +312,7 @@ public class MaximizeMinimizeVariants {
             for(int d=1; d<n; d++) {
                 // carry over yesterday’s profit: curr[d - 1] or sell at (prices[d]) + the best possible previous profit (maxDiff)
                 curr[d] = Math.max(curr[d-1], prices[d] + maxDiff);
-                // best opportunity to buy in the past, if buy on some earlier day, which one gives me the best total profit if seel today
+                // best opportunity to buy in the past, if buy on some earlier day, which one gives me the best total profit if sell today
                 maxDiff = Math.max(maxDiff, prev[d] - prices[d]);
             }
 
