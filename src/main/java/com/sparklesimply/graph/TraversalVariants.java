@@ -240,4 +240,56 @@ public class TraversalVariants {
         grid[i][j] = temp;
         result[1] = result[1] - temp;
     }
+
+    /**
+     * Problem statement: Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find all possible paths from node 0 to node n - 1 and return them in any order.
+     * The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).
+     * @param graph matrix representation
+     * @return all possible paths from 0 to n-1
+     */
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        Queue<List<Integer>> q = new LinkedList<>();
+        List<List<Integer>> result = new ArrayList<>();
+        int n = graph.length;
+        q.offer(List.of(0));
+        while(!q.isEmpty()) {
+            List<Integer> path = q.poll();
+            int currLastNode = path.get(path.size()-1);
+            if(currLastNode == n-1) {
+                result.add(path);
+            }
+            for(int neigh : graph[currLastNode]) {
+                List<Integer> newPath = new ArrayList<>(path);
+                newPath.add(neigh);
+                q.offer(newPath);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Problem statement: Given a directed acyclic graph (DAG) of n nodes labeled from 0 to n - 1, find shortest path from node from to node to and return the shortest path.
+     * The graph is given as follows: graph[i] is a list of all nodes you can visit from node i (i.e., there is a directed edge from node i to node graph[i][j]).
+     * @param graph matrix representation
+     * @return shortest path
+     */
+    public List<Integer> shortestPathSourceTarget(int[][] graph, int from, int to) {
+        Queue<List<Integer>> q = new LinkedList<>();
+        List<Integer> result = new ArrayList<>();
+        int n = graph.length;
+        q.offer(List.of(from));
+        while(!q.isEmpty()) {
+            List<Integer> path = q.poll();
+            int currLastNode = path.get(path.size()-1);
+            if(currLastNode == to) {
+                return path;
+            }
+            for(int neigh : graph[currLastNode]) {
+                List<Integer> newPath = new ArrayList<>(path);
+                newPath.add(neigh);
+                q.offer(newPath);
+            }
+        }
+        return result;
+    }
 }

@@ -32,7 +32,7 @@ public class PrefixSumVariants {
     }
 
     /**
-     * This methos will give count of all sub arrays where sum of elements is equal to k
+     * This method will give count of all sub arrays where sum of elements is equal to k
      * @param nums
      * @param k
      * @return
@@ -77,7 +77,7 @@ public class PrefixSumVariants {
             sum += nums[i];
             if(sum == k)
                 maxLen = i+1;
-            // checking id we encountered <prevsum+k=sum>, implies that we encountered sub array values making sum k
+            // checking if we encountered <prevSum+k=sum>, implies that we encountered sub array values making sum k
             Integer prevSumIndex = prefixSum.get(sum - k);
             if(prevSumIndex != null) {
                 maxLen = Math.max(maxLen,i-prevSumIndex);
