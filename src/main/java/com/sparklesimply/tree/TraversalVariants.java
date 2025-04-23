@@ -22,7 +22,6 @@ public class TraversalVariants {
         kthSmallestElementUtil(root, k, counter, result);
         return result[0];
     }
-
     private void kthSmallestElementUtil(TreeNode root, int k, int[] counter, int[] result) {
         if (root == null)
             return;
@@ -157,7 +156,6 @@ public class TraversalVariants {
         }
         return largestTreeRoot;
     }
-
     private int dfs(Integer root, HashMap<Integer, Integer> forest) {
         int size = 1; // root itself
         for (Map.Entry<Integer, Integer> entry : forest.entrySet()) {
@@ -250,7 +248,6 @@ public class TraversalVariants {
         delNodesUtil(root, deleteSet, forest);
         return forest;
     }
-
     private TreeNode delNodesUtil(TreeNode root, Set<Integer> deleteSet, List<TreeNode> forest) {
         if (root == null)
             return null;
@@ -265,5 +262,215 @@ public class TraversalVariants {
             return null;
         }
         return root;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree, return its maximum depth.
+     * A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+     * @param root
+     * @return
+     */
+    public int maxDepth(TreeNode root) {
+        if(root == null)
+            return 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        int depth = 0;
+        while(true) {
+            int n = q.size();
+            if(n == 0)
+                return depth;
+            while(n-- > 0) {
+                TreeNode temp = q.poll();
+                if(temp.left != null)
+                    q.add(temp.left);
+                if(temp.right != null)
+                    q.add(temp.right);
+            }
+            depth++;
+        }
+    }
+
+    /**
+     * Problem statement: Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+     * Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+     * @param p
+     * @param q
+     * @return
+     */
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p == null && q == null)
+            return true;
+        if(p != null && q != null)
+            return (p.data == q.data && isSameTree(p.left, q.left) && isSameTree(p.right, q.right));
+        return false;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree, invert the tree, and return its root.
+     * @param root
+     * @return
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null) {
+            return null;
+        }
+        TreeNode leftChild = root.left;
+        TreeNode rightChild = root.right;
+        // swapping left and right child for inverting tree, we can use BFS traversal also and while polling node - swap left and right child nodes
+        root.left = invertTree(rightChild);
+        root.right = invertTree(leftChild);
+        return root;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if(root == null)
+            return true;
+        return isSymmetricUtil(root.left, root.right);
+    }
+    private boolean isSymmetricUtil(TreeNode left, TreeNode right) {
+        if(left == null && right == null)
+            return true;
+        if(left != null && right != null)
+            return (left.data == right.data && isSymmetricUtil(left.left, right.right) && isSymmetricUtil(left.right, right.left));
+        return false;
+    }
+
+    /**
+     * Problem statement: You are given the root of a binary tree containing digits from 0 to 9 only.
+     * Each root-to-leaf path in the tree represents a number.
+     * For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
+     * Return the total sum of all root-to-leaf numbers. Test cases are generated so that the answer will fit in a 32-bit integer.
+     * A leaf node is a node with no children.
+     * @param root
+     * @return
+     */
+    public int sumNumbers(TreeNode root) {
+        if(root == null)
+            return 0;
+        return sumNumbersUtil(root, 0);
+    }
+    private int sumNumbersUtil(TreeNode root, int currSum) {
+        if(root == null)
+            return 0;
+        currSum = currSum*10 + root.data;
+        if(root.left == null && root.right == null)
+            return currSum;
+        return sumNumbersUtil(root.left, currSum) + sumNumbersUtil(root.right, currSum);
+    }
+
+    /**
+     * Problem statement: Given the root of a complete binary tree, return the number of the nodes in the tree.
+     * According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+     * Design an algorithm that runs in less than O(n) time complexity.
+     * @param root
+     * @return
+     */
+    public int countNodes(TreeNode root) {
+        if(root == null)
+            return 0;
+        int leftHeight = calculateLeftHeight(root);
+        int rightHeight = calculateRightHeight(root);
+        if(leftHeight == rightHeight) {
+            // for a perfect binary tree, total nodes are: 2^height-1, time complexity: O(log n * log n)
+            return (1 << leftHeight) - 1;
+        } else {
+            // if tree iis not perfect, time complexity: O(n)
+            return 1 + countNodes(root.left) + countNodes(root.right);
+        }
+    }
+    private int calculateLeftHeight(TreeNode root) {
+        int height = 0;
+        while(root != null) {
+            height++;
+            root = root.left;
+        }
+        return height;
+    }
+    private int calculateRightHeight(TreeNode root) {
+        int height = 0;
+        while(root != null) {
+            height++;
+            root = root.right;
+        }
+        return height;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree, flatten the tree into a "linked list":
+     * The "linked list" should use the same TreeNode class where the right child pointer points to the next node in the list and the left child pointer is always null.
+     * The "linked list" should be in the same order as a pre-order traversal of the binary tree.
+     * @param root node
+     */
+    public void flatten(TreeNode root) {
+        if(root == null)
+            return;
+        TreeNode[] prev = new TreeNode[1];
+        flattenUtil(root, prev);
+    }
+    private void flattenUtil(TreeNode root, TreeNode[] prev) {
+        if(root == null)
+            return;
+        flattenUtil(root.right, prev);
+        flattenUtil(root.left, prev);
+        root.right = prev[0];
+        root.left = null;
+        prev[0] = root;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. Answers within 10-5 of the actual answer will be accepted.
+     * @param root
+     * @return
+     */
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> averageOfLevels = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            int n = q.size();
+            int totalNodesAtCurrenLevel = n;
+            double sum = 0;
+            while(n-- > 0) {
+                TreeNode temp = q.poll();
+                sum += temp.data;
+                if(temp.left != null)
+                    q.add(temp.left);
+                if(temp.right != null)
+                    q.add(temp.right);
+            }
+            averageOfLevels.add(sum/totalNodesAtCurrenLevel);
+        }
+        return averageOfLevels;
+    }
+
+    /**
+     * Problem statement: Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+     * @param root
+     * @return
+     */
+    public int getMinimumDifference(TreeNode root) {
+        if(root == null)
+            return 0;
+        int[] minDiff = new int[1];
+        minDiff[0] = Integer.MAX_VALUE;
+        TreeNode[] prev = new TreeNode[1];
+        prev[0] = null;
+        getMinimumDiffUtil(root, prev, minDiff);
+        return minDiff[0];
+    }
+    private void getMinimumDiffUtil(TreeNode root, TreeNode[] prev, int[]  minDiff) {
+        if(root == null)
+            return;
+        getMinimumDiffUtil(root.left, prev, minDiff);
+        if(prev[0] != null)
+            minDiff[0] = Math.min(minDiff[0], Math.abs(root.data - prev[0].data));
+        prev[0] = root;
+        getMinimumDiffUtil(root.right, prev, minDiff);
     }
 }

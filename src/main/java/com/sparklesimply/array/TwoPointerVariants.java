@@ -43,4 +43,37 @@ public class TwoPointerVariants {
         return result;
     }
 
+    /**
+     * Problem statement: Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+     * Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
+     * Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.
+     * Return k
+     * @param nums
+     * @param val
+     * @return
+     */
+    public int removeElement(int[] nums, int val) {
+        int n = nums.length;
+        for(int i=0, j=n-1; i<j;) {
+            if(nums[i] == val && nums[j] != val) {
+                // swap(nums, i, j);
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                i++;
+                j--;
+            } else if(nums[i] != val) {
+                i++;
+            } else if(nums[j] == val) {
+                j--;
+            }
+        }
+        int count = 0;
+        for(int num : nums) {
+            if(num != val)
+                count++;
+        }
+        return count;
+    }
+
 }

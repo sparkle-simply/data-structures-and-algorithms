@@ -61,4 +61,57 @@ public class SumTreeVariants {
         else
             return false;
     }
+
+    /**
+     * Problem statement: A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+     * The path sum of a path is the sum of the node's values in the path.
+     * Given the root of a binary tree, return the maximum path sum of any non-empty path.
+     * @param root
+     * @return
+     */
+    public int maxPathSum(TreeNode root) {
+        if(root == null)
+            return 0;
+        int[] result = new int[1];
+        result[0] = Integer.MIN_VALUE;
+        maxPathSumUtil(root, result);
+        return result[0];
+    }
+    public int maxPathSumUtil(TreeNode root, int[] result) {
+        if(root == null) {
+            return 0;
+        }
+        int leftSum = maxPathSumUtil(root.left, result);
+        int rightSum = maxPathSumUtil(root.right, result);
+        // calculating max path sum with curr node or combining current node to best child path sum
+        int maxSingle = Math.max(root.data, Math.max(leftSum, rightSum) + root.data);
+        // calculating max path sum with combining curr node to best child path or curr node to both child path
+        int maxTop = Math.max(maxSingle, leftSum + rightSum + root.data);
+        result[0] = Math.max(result[0], maxTop);
+        return maxSingle;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+     * A leaf is a node with no children.
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null)
+            return false;
+        return hasPathSumUtil(root, 0, targetSum);
+    }
+    private boolean hasPathSumUtil(TreeNode root, int currSum, int targetSum) {
+        if(root == null)
+            return false;
+        currSum += root.data;
+        if(Utility.isLeaf(root) && currSum == targetSum)
+            return true;
+        boolean l = hasPathSumUtil(root.left, currSum, targetSum);
+        boolean r = hasPathSumUtil(root.right, currSum, targetSum);
+        return l || r;
+    }
+
 }
