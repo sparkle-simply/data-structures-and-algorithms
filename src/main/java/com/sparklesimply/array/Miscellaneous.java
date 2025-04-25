@@ -1,5 +1,7 @@
 package com.sparklesimply.array;
 
+import java.util.Stack;
+
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
  */
@@ -99,5 +101,25 @@ public class Miscellaneous {
             maxWaterArea = Math.max(maxWaterArea, (j-i+1)*h);
         }
         return maxWaterArea;
+    }
+
+    /**
+     * Problem statement: Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+     * Time complexity: O(n) as all temperatures index are processed at most once
+     * @param temperatures
+     * @return
+     */
+    public int[] dailyTemperatures(int[] temperatures) {
+        int n = temperatures.length;
+        int[] days = new int[n];
+        Stack<Integer> st = new Stack<>();
+        for(int i=0; i<n; i++) {
+            while(!st.isEmpty() && temperatures[st.peek()] < temperatures[i]) {
+                days[st.peek()] = i - st.peek();
+                st.pop();
+            }
+            st.push(i);
+        }
+        return days;
     }
 }

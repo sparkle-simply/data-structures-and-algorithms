@@ -35,4 +35,65 @@ public class Miscellaneous {
             return !q.isEmpty();
         }
     }
+
+    /**
+     * Problem statement: A trie (pronounced as "try") or prefix tree is a tree data structure used to efficiently store and retrieve keys in a dataset of strings. There are various applications of this data structure, such as autocomplete and spellchecker.
+     * Implement the Trie class:
+     * Trie() Initializes the trie object.
+     * void insert(String word) Inserts the string word into the trie.
+     * boolean search(String word) Returns true if the string word is in the trie (i.e., was inserted before), and false otherwise.
+     * boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.
+     */
+    class Trie {
+
+        class TrieNode {
+            TrieNode[] childrens;
+            boolean isEndOfWord;
+            public TrieNode() {
+                childrens = new TrieNode[26]; // for all lowercase alphabets
+                isEndOfWord = false;
+            }
+        }
+
+        private TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
+        }
+
+        public void insert(String word) {
+            TrieNode current = root;
+            for(char c : word.toCharArray()) {
+                int index = c -'a';
+                if(current.childrens[index] == null) {
+                    current.childrens[index] = new TrieNode();
+                }
+                current = current.childrens[index];
+            }
+            current.isEndOfWord = true;
+        }
+
+        public boolean search(String word) {
+            TrieNode searchResult = searchNode(word);
+            return (searchResult != null && searchResult.isEndOfWord);
+
+        }
+
+        public boolean startsWith(String prefix) {
+            return (searchNode(prefix) != null);
+
+        }
+
+        private TrieNode searchNode(String word) {
+            TrieNode current = root;
+            for(char c : word.toCharArray()) {
+                int index = c - 'a';
+                if(current.childrens[index] == null)
+                    return null;
+                current = current.childrens[index];
+            }
+            return current;
+        }
+    }
+
 }
