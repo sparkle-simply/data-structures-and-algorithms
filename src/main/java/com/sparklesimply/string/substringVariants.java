@@ -28,7 +28,6 @@ public class substringVariants {
                 maxLen = i-start+1;
                 maxStart = start;
             }
-            maxLen = Math.max(maxLen, i-start+1);
         }
         System.out.println(s.substring(maxStart, maxStart+maxLen));
         return maxLen;

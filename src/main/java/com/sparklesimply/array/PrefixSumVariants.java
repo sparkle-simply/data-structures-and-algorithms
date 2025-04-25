@@ -69,7 +69,7 @@ public class PrefixSumVariants {
      * @param k
      * @return
      */
-    public int maxSubArrayLengthWithSunK(int[] nums, int k) {
+    public int maxSubArrayLengthWithSumK(int[] nums, int k) {
         int n = nums.length;
         int maxLen = 0, sum = 0;
         HashMap<Integer, Integer> prefixSum = new HashMap<>();

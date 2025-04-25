@@ -342,29 +342,6 @@ public class TraversalVariants {
     }
 
     /**
-     * Problem statement: You are given the root of a binary tree containing digits from 0 to 9 only.
-     * Each root-to-leaf path in the tree represents a number.
-     * For example, the root-to-leaf path 1 -> 2 -> 3 represents the number 123.
-     * Return the total sum of all root-to-leaf numbers. Test cases are generated so that the answer will fit in a 32-bit integer.
-     * A leaf node is a node with no children.
-     * @param root
-     * @return
-     */
-    public int sumNumbers(TreeNode root) {
-        if(root == null)
-            return 0;
-        return sumNumbersUtil(root, 0);
-    }
-    private int sumNumbersUtil(TreeNode root, int currSum) {
-        if(root == null)
-            return 0;
-        currSum = currSum*10 + root.data;
-        if(root.left == null && root.right == null)
-            return currSum;
-        return sumNumbersUtil(root.left, currSum) + sumNumbersUtil(root.right, currSum);
-    }
-
-    /**
      * Problem statement: Given the root of a complete binary tree, return the number of the nodes in the tree.
      * According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
      * Design an algorithm that runs in less than O(n) time complexity.
