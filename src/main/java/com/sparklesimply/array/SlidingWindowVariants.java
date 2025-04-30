@@ -186,5 +186,72 @@ public class SlidingWindowVariants {
         return maxLen;
     }
 
+    /**
+     * Problem statements: A teacher is writing a test with n true/false questions, with 'T' denoting true and 'F' denoting false. He wants to confuse the students by maximizing the number of consecutive questions with the same answer (multiple trues or multiple falses in a row).
+     * You are given a string answerKey, where answerKey[i] is the original answer to the ith question. In addition, you are given an integer k, the maximum number of times you may perform the following operation:
+     * Change the answer key for any question to 'T' or 'F' (i.e., set answerKey[i] to 'T' or 'F').
+     * Return the maximum number of consecutive 'T's or 'F's in the answer key after performing the operation at most k times.
+     * Time complexity: O(n)
+     * @param answerKey
+     * @param k
+     * @return
+     */
+    public int maxConsecutiveAnswers(String answerKey, int k) {
+        int n = answerKey.length();
+        int l = 0, r = 0, maxLen = 0, currLen = 0, trueCount = 0, falseCount = 0, maxOcc = 0;
+        while(r < n) {
+            if(answerKey.charAt(r) == 'T')
+                trueCount++;
+            else
+                falseCount++;
+            maxOcc = Math.max(trueCount, falseCount);
+            currLen = r - l + 1;
+            if(currLen - maxOcc > k) {
+                if(answerKey.charAt(l) == 'T')
+                    trueCount--;
+                else
+                    falseCount--;
+                l++;
+                currLen--;
+            }
+            maxLen = Math.max(maxLen, currLen);
+            r++;
+        }
+        return maxLen;
+    }
+
+    /**
+     * Problem statement: You are given an integer array nums. In one operation, you can replace any element in nums with any integer.
+     * nums is considered continuous if both of the following conditions are fulfilled:
+     * All elements in nums are unique.
+     * The difference between the maximum element and the minimum element in nums equals nums.length - 1.
+     * For example, nums = [4, 2, 5, 3] is continuous, but nums = [1, 2, 3, 5, 6] is not continuous.
+     * Return the minimum number of operations to make nums continuous.
+     * Time complexity: O(n log n)
+     * @param nums
+     * @return
+     */
+    public int minOperations(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        // considering unique elements in num
+        int uniqueLen = 1;
+        for(int i=1; i<n; i++) {
+            if(nums[i] != nums[i-1]) {
+                nums[uniqueLen++] = nums[i];
+            }
+        }
+
+        int l = 0, maxLen = 0;
+        for(int r = 0; r < uniqueLen; r++) {
+            while(l <= r && nums[r] - nums[l] > n - 1) {
+                l++;
+            }
+            maxLen = Math.max(maxLen, r-l+1);
+        }
+        // minimum operations will be difference of total length and max window length having max and min value difference as n-1
+        return n-maxLen;
+    }
+
 
 }
