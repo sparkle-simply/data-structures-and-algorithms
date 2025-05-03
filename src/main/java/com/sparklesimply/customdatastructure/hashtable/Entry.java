@@ -1,4 +1,4 @@
-package com.sparklesimply.hashtable.myhashtable;
+package com.sparklesimply.customdatastructure.hashtable;
 
 public class Entry {
     public Object key;

@@ -1,5 +1,7 @@
 package com.sparklesimply.array;
 
+import java.util.*;
+
 public class SearchVariants {
 
     /**
@@ -121,6 +123,57 @@ public class SearchVariants {
             }
         }
         return result;
+    }
+
+    /**
+     * Problem statement: Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+     * Time complexity: O(n)
+     * @param nums
+     * @return
+     */
+    public boolean increasingTriplet(int[] nums) {
+        int n = nums.length;
+        if(n < 3)
+            return false;
+        int min1 = Integer.MAX_VALUE;
+        int min2 = Integer.MAX_VALUE;
+        for(int x : nums) {
+            if(min1 >= x)
+                min1 = x;
+            else if(min2 >= x)
+                min2 = x;
+            else
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Problem statement: Given an array of n integers nums, a 132 pattern is a subsequence of three integers nums[i], nums[j] and nums[k] such that i < j < k and nums[i] < nums[k] < nums[j].
+     * Return true if there is a 132 pattern in nums, otherwise, return false.
+     * Time complexity: O(n)
+     * @param nums
+     * @return
+     */
+    public boolean find132pattern(int[] nums) {
+        int n = nums.length;
+        if(n < 3)
+            return false;
+        int[] min = new int[n];
+        min[0] = nums[0];
+        for(int i=1; i<n; i++)
+            min[i] = Math.min(min[i-1], nums[i]);
+        Stack<Integer> st = new Stack<>();
+        for(int j=n-1; j>=0; j--) {
+            if(nums[j] > min[j]) {
+                while(!st.isEmpty() && st.peek() <= min[j])
+                    st.pop();
+                if(!st.isEmpty() && st.peek() < nums[j])
+                    return true;
+                st.push(nums[j]);
+            }
+        }
+        return false;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.sparklesimply.array;
 
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
@@ -144,5 +144,66 @@ public class Miscellaneous {
 
         }
         return l + k;
+    }
+
+    /**
+     * Problem statement: Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
+     * @param points
+     * @return
+     */
+    public int maxPoints(int[][] points) {
+        int n = points.length;
+        if(n<2)
+            return n;
+        int max = 1;
+        double slope;
+        for(int i=0; i<points.length; i++) {
+            Map<Double, Integer> map = new HashMap<>();
+            for(int j=0; j<points.length; j++) {
+                if(i==j)
+                    continue;
+                if(points[j][0] == points[i][0])
+                    slope = Double.POSITIVE_INFINITY;
+                else {
+                    slope = (double) (points[j][1] - points[i][1]) / (points[j][0] - points[i][0]);
+                }
+
+                int count = map.getOrDefault(slope, 0) + 1;
+                map.put(slope, count);
+                max = Math.max(max, count);
+            }
+        }
+        return max+1;
+    }
+
+    /**
+     * Problem statement: Implement the class SubrectangleQueries which receives a rows x cols rectangle as a matrix of integers in the constructor and supports two methods:
+     * 1. updateSubrectangle(int row1, int col1, int row2, int col2, int newValue)
+     * Updates all values with newValue in the subrectangle whose upper left coordinate is (row1,col1) and bottom right coordinate is (row2,col2).
+     * 2. getValue(int row, int col)
+     * Returns the current value of the coordinate (row,col) from the rectangle.
+     */
+    class SubrectangleQueries {
+
+        private int[][] matrix;
+
+        public SubrectangleQueries(int[][] rectangle) {
+            this.matrix = new int[rectangle.length][rectangle[0].length];
+            for(int i=0; i<rectangle.length; i++)
+                System.arraycopy(rectangle[i], 0, matrix[i], 0, rectangle[i].length);
+        }
+
+        public void updateSubrectangle(int row1, int col1, int row2, int col2, int newValue) {
+            if(row1<0 || row1>=this.matrix.length || row2<0 || row2>=this.matrix.length || col1<0 || col1>=this.matrix[0].length || col2<0 || col2>=this.matrix[0].length)
+                return;
+            for(int i=row1; i<=row2; i++) {
+                for(int j=col1; j<=col2; j++)
+                    this.matrix[i][j] = newValue;
+            }
+        }
+
+        public int getValue(int row, int col) {
+            return this.matrix[row][col];
+        }
     }
 }

@@ -205,4 +205,44 @@ public class TraversalVariants {
         }
         return temp;
     }
+
+    /**
+     * Problem statement: Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.
+     * k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+     * You may not alter the values in the list's nodes, only nodes themselves may be changed.
+     * Time complexity: O(n)
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || k == 0)
+            return head;
+        return reverseKGroupUtil(head, k);
+    }
+    boolean checkNextKGroupPresent(ListNode head, int k) {
+        ListNode curr = head;
+        while(curr != null && k != 0) {
+            curr = curr.next;
+            k--;
+        }
+        return (k == 0);
+    }
+    ListNode reverseKGroupUtil(ListNode head, int k) {
+        if(!checkNextKGroupPresent(head, k))
+            return head;
+        ListNode curr = head, prev = null, next = null;
+        int count = 0;
+        while(count < k && curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        if(next != prev) {
+            head.next = reverseKGroupUtil(next, k);
+        }
+        return prev;
+    }
 }
