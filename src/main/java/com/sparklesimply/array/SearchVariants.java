@@ -176,4 +176,28 @@ public class SearchVariants {
         return false;
     }
 
+    /**
+     * Problem statement: You are given a 0-indexed integer array nums and an integer k. Your task is to perform the following operation exactly k times in order to maximize your score:
+     * Select an element m from nums.
+     * Remove the selected element m from the array.
+     * Add a new element with a value of m + 1 to the array.
+     * Increase your score by m.
+     * Return the maximum score you can achieve after performing the operation exactly k times.
+     * Time complexity: O(n log n)
+     * Note: we can also use another approach to find maximum value in nums and then compute sum with (in place of nums[n-1]) maximum value with Time complexity: O(n)
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int maximizeSum(int[] nums, int k) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int sum  = 0;
+        while(k-->0) {
+            sum += nums[n-1];
+            nums[n-1]++;
+        }
+        return sum;
+    }
+
 }

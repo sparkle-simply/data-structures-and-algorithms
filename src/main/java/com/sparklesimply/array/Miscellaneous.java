@@ -206,4 +206,74 @@ public class Miscellaneous {
             return this.matrix[row][col];
         }
     }
+
+    /**
+     * Problem statement: Given an integer n, return a string array answer (1-indexed) where:
+     * answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
+     * answer[i] == "Fizz" if i is divisible by 3.
+     * answer[i] == "Buzz" if i is divisible by 5.
+     * answer[i] == i (as a string) if none of the above conditions are true.
+     * Focus areas:
+     * SOLID Principles
+     * Object Oriented Design
+     * Extensible code with working demo
+     */
+    class FizzBuzzExample {
+        public interface DivTest {
+            public boolean check();
+            public String encode();
+        }
+
+        public class DivWith3Test implements DivTest {
+            private int num;
+            public DivWith3Test(int x) {
+                this.num = x;
+            }
+            @Override
+            public boolean check() {
+                return (this.num % 3) == 0;
+            }
+            @Override
+            public String encode() {
+                return "Fizz";
+            }
+        }
+
+        public class DivWith5Test implements DivTest {
+            private int num;
+            public DivWith5Test(int x) {
+                this.num = x;
+            }
+            @Override
+            public boolean check() {
+                return (this.num % 5) == 0;
+            }
+            @Override
+            public String encode() {
+                return "Buzz";
+            }
+        }
+
+        public List<String> fizzBuzz(int n) {
+            List<String> result = new ArrayList<>();
+
+            for(int i=1; i<=n; i++) {
+                DivTest divBy3 = new DivWith3Test(i);
+                DivTest divBy5 = new DivWith5Test(i);
+
+                if(divBy3.check() && divBy5.check()) {
+                    result.add(divBy3.encode()+divBy5.encode());
+                } else if(divBy3.check()) {
+                    result.add(divBy3.encode());
+                } else if(divBy5.check()) {
+                    result.add(divBy5.encode());
+                } else {
+                    result.add(String.valueOf(i));
+                }
+            }
+
+            return result;
+
+        }
+    }
 }

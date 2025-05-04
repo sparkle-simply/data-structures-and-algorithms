@@ -253,5 +253,28 @@ public class SlidingWindowVariants {
         return n-maxLen;
     }
 
+    /**
+     * Problem statement: Given an array arr[] and an integer K, the task is to find the maximize the sum of K elements in the Array by taking only corner elements.
+     * Time complexity: O(n)
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int maximumSumWithKCornerElements(int[] nums, int k) {
+        int n = nums.length;
+        int l = 0, r = n-1;
+        int currSum = 0, maxSum = 0;
+        // initial window
+        while(l<k)
+            currSum += nums[l++];
+        maxSum = Math.max(maxSum, currSum);
+        // updating window to check for maximum sun with k corner elements
+        while(k-->0) {
+            currSum = currSum - nums[--l] + nums[r--];
+            maxSum = Math.max(maxSum, currSum);
+        }
+        return maxSum;
+    }
+
 
 }
