@@ -450,4 +450,72 @@ public class TraversalVariants {
         prev[0] = root;
         getMinimumDiffUtil(root.right, prev, minDiff);
     }
+
+    /**
+     * Problem statement: Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+     * Time complexity: O(n)
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(root == null)
+            return result;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            int n = q.size();
+            List<Integer> currLevelNodes = new ArrayList<>();
+            while(n-- > 0) {
+                TreeNode temp = q.poll();
+                currLevelNodes.add(temp.data);
+                if(temp.left != null)
+                    q.add(temp.left);
+                if(temp.right != null)
+                    q.add(temp.right);
+            }
+            result.add(currLevelNodes);
+        }
+        return result;
+    }
+
+    /**
+     * Problem statement: Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+     * Time complexity: O(n)
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if(root == null)
+            return result;
+        Deque<TreeNode> q = new ArrayDeque<>();
+        q.offerFirst(root);
+        boolean reverse = false;
+        while(!q.isEmpty()) {
+            int n = q.size();
+            List<Integer> currLevelNodes = new ArrayList<>();
+            if(!reverse) {
+                while(n-- > 0) {
+                    if(q.peekLast().left != null)
+                        q.offerFirst(q.peekLast().left);
+                    if(q.peekLast().right != null)
+                        q.offerFirst(q.peekLast().right);
+                    currLevelNodes.add(q.pollLast().data);
+                }
+                reverse = !reverse;
+            } else {
+                while(n-- > 0) {
+                    if(q.peekFirst().right != null)
+                        q.offerLast(q.peekFirst().right);
+                    if(q.peekFirst().left != null)
+                        q.offerLast(q.peekFirst().left);
+                    currLevelNodes.add(q.pollFirst().data);
+                }
+                reverse = !reverse;
+            }
+            result.add(currLevelNodes);
+        }
+        return result;
+    }
 }
