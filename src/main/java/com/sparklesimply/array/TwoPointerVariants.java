@@ -76,4 +76,30 @@ public class TwoPointerVariants {
         return count;
     }
 
+    /**
+     * Problem statement: Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number. Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
+     * Return the indices of the two numbers, index1 and index2, added by one as an integer array [index1, index2] of length 2.
+     * The tests are generated such that there is exactly one solution. You may not use the same element twice.
+     * Your solution must use only constant extra space.
+     * Time complexity: O(n)
+     * @param numbers
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] numbers, int target) {
+        int n = numbers.length;
+        int l = 0, r = n-1, sum = 0;
+        while(l<r) {
+            sum = numbers[l] + numbers[r];
+            if(sum == target)
+                return new int[] {l+1, r+1};
+            if(sum < target)
+                l++;
+            else
+                r--;
+        }
+        return new int[] {-1, -1};
+
+    }
+
 }

@@ -8,6 +8,27 @@ import java.util.*;
 public class Miscellaneous {
 
     /**
+     * Problem statement: You are given an integer array nums. You are initially positioned at the array's first index, and each element in the array represents your maximum jump length at that position.
+     * Return true if you can reach the last index, or false otherwise.
+     * Time complexity: O(n)
+     * @param nums
+     * @return
+     */
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        int maxReach = 0;
+        for(int i=0; i<n; i++) {
+            if(i > maxReach)
+                return false;
+            maxReach = Math.max(maxReach, i+nums[i]);
+            if(maxReach >= n-1)
+                return true;
+        }
+        // for empty arrays
+        return true;
+    }
+
+    /**
      * You are given a 0-indexed array of integers nums of length n. You are initially positioned at nums[0].
      * Each element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at nums[i], you can jump to any nums[i + j] where:
      * 0 <= j <= nums[i] and
@@ -254,26 +275,35 @@ public class Miscellaneous {
             }
         }
 
-        public List<String> fizzBuzz(int n) {
-            List<String> result = new ArrayList<>();
-
-            for(int i=1; i<=n; i++) {
-                DivTest divBy3 = new DivWith3Test(i);
-                DivTest divBy5 = new DivWith5Test(i);
-
-                if(divBy3.check() && divBy5.check()) {
-                    result.add(divBy3.encode()+divBy5.encode());
-                } else if(divBy3.check()) {
-                    result.add(divBy3.encode());
-                } else if(divBy5.check()) {
-                    result.add(divBy5.encode());
-                } else {
-                    result.add(String.valueOf(i));
-                }
-            }
-
-            return result;
-
+        /**
+         * Problem statement: There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
+         * You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations.
+         * Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique.
+         * Time complexity: O(n)
+         * @param gas
+         * @param cost
+         * @return
+         */
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int n = gas.length;
+        int totalGas = 0, totalCost = 0;
+        for(int x : gas) {
+            totalGas += x;
         }
+        for(int x : cost) {
+            totalCost += x;
+        }
+        if(totalGas < totalCost)
+            return -1;
+        int currGas = 0;
+        int start = 0;
+        for(int i=0; i<n; i++) {
+            currGas = currGas + gas[i] - cost[i];
+            if(currGas < 0) {
+                currGas = 0;
+                start = i+1;
+            }
+        }
+        return start;
     }
 }

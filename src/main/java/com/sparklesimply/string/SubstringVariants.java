@@ -2,7 +2,7 @@ package com.sparklesimply.string;
 
 import java.util.*;
 
-public class substringVariants {
+public class SubstringVariants {
 
     /**
      * Problem statement: Given a string s, find the length of the longest substring without duplicate characters.

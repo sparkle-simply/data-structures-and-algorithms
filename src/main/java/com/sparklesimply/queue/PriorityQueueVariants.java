@@ -67,6 +67,29 @@ public class PriorityQueueVariants {
     }
 
     /**
+     * Problem statement: ou are given an array/list ‘ARR’ consisting of ‘N’ non - negative integers and an integer ‘K’. Your task is to return the K-th smallest element of the array.
+     * For example:
+     * Given an array/list ‘ARR' = [ 3, 2, 4, 5, 6 ] and 'K' = 3. The 3rd smallest element is "4" because the order of numbers is [ 2, 3, 4, 5, 6 ].
+     * Time complexity: O(k)
+     * @param v
+     * @param n
+     * @param k
+     * @return
+     */
+    public int findkthSmallest(ArrayList<Integer> v, int n, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> y - x);
+        for(int i=0; i<k; i++)
+            pq.offer(v.get(i));
+        for(int i=k; i<n; i++) {
+            if(pq.peek() > v.get(i)) {
+                pq.poll();
+                pq.offer(v.get(i));
+            }
+        }
+        return pq.poll();
+    }
+
+    /**
      * You are given n projects where the ith project has a pure profit profits[i] and a minimum capital of capital[i] is needed to start it.
      * Initially, you have w capital. When you finish a project, you will obtain its pure profit and the profit will be added to your total capital.
      * Pick a list of at most k distinct projects from given projects to maximize your final capital, and return the final maximized capital.
