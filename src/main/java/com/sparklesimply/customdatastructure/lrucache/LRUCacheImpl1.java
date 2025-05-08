@@ -3,12 +3,12 @@ package com.sparklesimply.customdatastructure.lrucache;
 
 import java.util.*;
 
-public class LRUCache {
+public class LRUCacheImpl1 {
 
     private Map<Integer, Integer> cache;
     private int capacity;
 
-    public LRUCache(int capacity) {
+    public LRUCacheImpl1(int capacity) {
         this.cache = new LinkedHashMap<>();
         this.capacity = capacity;
     }

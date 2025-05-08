@@ -294,4 +294,23 @@ public class TraversalVariants {
         }
         return copyHead;
     }
+
+    /**
+     * Given singly linked list, find the 1/3rd element of it.
+     * (A-B-C-D-E-F , Answer B)
+     * A-B, Answer A)
+     * (A-B-C-D-E-F-G, Answer C)
+     * Approach: using fast and slow pointers
+     * Also, we may use the approach to get (n/k)th node in linked list
+     * @param head
+     * @return
+     */
+    public ListNode findOneThirdNode(ListNode head) {
+        ListNode fast = head, slow = head;
+        while(fast != null && fast.next != null && fast.next.next != null) {
+            fast = fast.next.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
 }
