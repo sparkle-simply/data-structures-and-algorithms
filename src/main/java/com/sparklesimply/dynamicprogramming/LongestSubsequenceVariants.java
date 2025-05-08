@@ -47,9 +47,8 @@ public class LongestSubsequenceVariants {
      * This method return the list of largest divisible set such that nums[i]%nums[j]==0 or vice versa
      * Here, we'll sort to have elements in increasing order as lower numbers are easily divisible to greater numbers
      * we'll maintain dp array to have the maximum length of divisible subset until index i, dp[i] = d[j]+1 if nums[i]%nums[j]==0
-     * also prev array maintained will backtrack to have the list of elements that are divisible
+     * also prev array maintained for backtrack, to have the list of elements that are divisible
      * Time Complexity: O(n^2)
-     *y
      * @param nums
      * @return
      */

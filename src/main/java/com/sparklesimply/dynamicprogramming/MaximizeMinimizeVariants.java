@@ -137,7 +137,7 @@ public class MaximizeMinimizeVariants {
      * Approach:
      * create a 1D array dp of size n to store the minimum path sum starting from the bottom, there's nowhere to go, so the minimum path starting from each element there is the element itself
      * we process the triangle from bottom to top, starting at the second-last row (n - 2)
-     * for each element in that row: add its value to the minimum of the two possible paths below it (either straight down dp[col] or diagonally right dp[col + 1]), overwrite dp[col] with the new minimum sum at that position
+     * for each element in that row: add its value to the minimum of the two possible paths below it (either straight up dp[col] or diagonally right dp[col + 1]), overwrite dp[col] with the new minimum sum at that position
      * @param triangle array
      * @return minimum sun from top to bottom of triangle array
      */
@@ -223,7 +223,7 @@ public class MaximizeMinimizeVariants {
      * Problem statement: Given an m x n binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
      * Approach:
      * use dp, where  dp[i][j] represent the side length of the largest square that ends at position (i, j) in the matrix
-     * if the value at matrix[i][j] is 1, then we check the squares formed by the neighboring cells to its left (dp[i][j-1]), top (dp[i-1][j]), and top-left diagonal (dp[i-1][j-1]). The square size at (i, j) will be the minimum of the three neighbors plus 1
+     * if the value at matrix[i-1][j-1] is 1, then we check the squares formed by the neighboring cells to its left (dp[i][j-1]), top (dp[i-1][j]), and top-left diagonal (dp[i-1][j-1]). The square size at (i, j) will be the minimum of the three neighbors plus 1
      * Time complexity: O(m*n)
      * @param matrix
      * @return
@@ -239,7 +239,6 @@ public class MaximizeMinimizeVariants {
                     dp[i][j] = Math.min(Math.min(dp[i-1][j], dp[i][j-1]), dp[i-1][j-1]) + 1;
                     maxSide = Math.max(maxSide, dp[i][j]);
                 }
-
             }
         }
         return maxSide*maxSide;

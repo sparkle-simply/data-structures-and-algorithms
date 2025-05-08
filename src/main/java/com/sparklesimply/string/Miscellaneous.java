@@ -1,0 +1,41 @@
+package com.sparklesimply.string;
+
+import java.util.*;
+
+public class Miscellaneous {
+
+    /**
+     * Problem statement: Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+     * A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+     * Time complexity: O(4^n * n)
+     * @param digits
+     * @return
+     */
+    public List<String> letterCombinations(String digits) {
+
+        List<String> result = new ArrayList<>();
+        int n = digits.length();
+        if(n == 0)
+            return result;
+        String[] keyPad = new String[] {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+
+        result.add("");
+
+        // fetching digit
+        for(char digit : digits.toCharArray()) {
+            List<String> temp = new ArrayList<>();
+            // fetching letters corresponding to digit
+            String letters = keyPad[digit-'0'];
+            for(char letter : letters.toCharArray()) {
+                // getting possible combinations
+                for(String combination : result) {
+                    temp.add(combination + letter);
+                }
+            }
+            // updating result
+            result = temp;
+        }
+        return result;
+    }
+}

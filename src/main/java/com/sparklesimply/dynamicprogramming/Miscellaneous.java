@@ -105,7 +105,7 @@ public class Miscellaneous {
      */
     public int uniquePaths(int m, int n) {
         int[] dp = new int[n];
-        // dp[j] represents numsbe of unique paths to reach column j in current row
+        // dp[j] represents nums be of unique paths to reach column j in current row
         /**
          for m = 3, n = 2
          1 0 -> initialization

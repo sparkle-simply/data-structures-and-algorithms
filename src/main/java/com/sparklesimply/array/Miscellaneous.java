@@ -229,61 +229,14 @@ public class Miscellaneous {
     }
 
     /**
-     * Problem statement: Given an integer n, return a string array answer (1-indexed) where:
-     * answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
-     * answer[i] == "Fizz" if i is divisible by 3.
-     * answer[i] == "Buzz" if i is divisible by 5.
-     * answer[i] == i (as a string) if none of the above conditions are true.
-     * Focus areas:
-     * SOLID Principles
-     * Object Oriented Design
-     * Extensible code with working demo
+     * Problem statement: There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
+     * You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations.
+     * Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique.
+     * Time complexity: O(n)
+     * @param gas
+     * @param cost
+     * @return
      */
-    class FizzBuzzExample {
-        public interface DivTest {
-            public boolean check();
-            public String encode();
-        }
-
-        public class DivWith3Test implements DivTest {
-            private int num;
-            public DivWith3Test(int x) {
-                this.num = x;
-            }
-            @Override
-            public boolean check() {
-                return (this.num % 3) == 0;
-            }
-            @Override
-            public String encode() {
-                return "Fizz";
-            }
-        }
-
-        public class DivWith5Test implements DivTest {
-            private int num;
-            public DivWith5Test(int x) {
-                this.num = x;
-            }
-            @Override
-            public boolean check() {
-                return (this.num % 5) == 0;
-            }
-            @Override
-            public String encode() {
-                return "Buzz";
-            }
-        }
-
-        /**
-         * Problem statement: There are n gas stations along a circular route, where the amount of gas at the ith station is gas[i].
-         * You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from the ith station to its next (i + 1)th station. You begin the journey with an empty tank at one of the gas stations.
-         * Given two integer arrays gas and cost, return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1. If there exists a solution, it is guaranteed to be unique.
-         * Time complexity: O(n)
-         * @param gas
-         * @param cost
-         * @return
-         */
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int n = gas.length;
         int totalGas = 0, totalCost = 0;
@@ -305,5 +258,59 @@ public class Miscellaneous {
             }
         }
         return start;
+    }
+
+    /**
+     * Problem statement: For a given integer array/list 'ARR' of size 'N' containing all distinct values, find the total number of 'Inversions' that may exist.
+     * An inversion is defined for a pair of integers in the array/list when the following two conditions are met.
+     * A pair ('ARR[i]', 'ARR[j]') is said to be an inversion when:
+     * 1. 'ARR[i] > 'ARR[j]'
+     * 2. 'i' < 'j'
+     * Where 'i' and 'j' denote the indices ranging from [0, 'N').
+     * Time complexity: O(n log n)
+     * @param arr
+     * @param n
+     * @return
+     */
+    public long getInversions(long arr[], int n) {
+        return getInversionsUtil(arr, 0, n-1);
+    }
+    private long getCountAndMerge(long arr[], int l, int mid, int r) {
+        int n1 = mid-l+1;
+        int n2 = r-mid;
+        long[] left = new long[n1];
+        long[] right = new long[n2];
+        for(int i=0; i<n1; i++) {
+            left[i] = arr[l+i];
+        }
+        for(int j=0; j<n2; j++) {
+            right[j] = arr[mid+1+j];
+        }
+        int i=0, j=0, k=l;
+        long invCount = 0;
+        while(i<n1 && j<n2) {
+            if(left[i] <= right[j]) {
+                arr[k++] = left[i++];
+            } else {
+                arr[k++] = right[j++];
+                invCount += (n1-i);
+            }
+        }
+        while(i<n1)
+            arr[k++] = left[i++];
+        while(j<n2)
+            arr[k++] = right[j++];
+        return invCount;
+
+    }
+    private long getInversionsUtil(long arr[], int l, int r) {
+        long invCount = 0;
+        if(l<r) {
+            int mid = l + (r-l)/2;
+            invCount += getInversionsUtil(arr, l, mid);
+            invCount += getInversionsUtil(arr, mid+1, r);
+            invCount += getCountAndMerge(arr, l, mid, r);
+        }
+        return invCount;
     }
 }
