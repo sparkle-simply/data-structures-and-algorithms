@@ -357,7 +357,7 @@ public class TraversalVariants {
             // for a perfect binary tree, total nodes are: 2^height-1, time complexity: O(log n * log n)
             return (1 << leftHeight) - 1;
         } else {
-            // if tree iis not perfect, time complexity: O(n)
+            // if tree is not perfect, time complexity: O(n)
             return 1 + countNodes(root.left) + countNodes(root.right);
         }
     }

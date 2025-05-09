@@ -21,4 +21,58 @@ public class TraversalVariants {
         }
         return sb.toString();
     }
+
+    /**
+     * Compress the string using continous frequency count
+     * string: ABC -> output: ABC
+     * string: AABBBCCTT -> output: A2B3C2T2
+     * Time complexity: O(n)
+     * Approach: using two loops
+     * @param s
+     * @return
+     */
+    public String compressUtilApproach1(String s) {
+        if(s == null || s.isEmpty())
+            return null;
+        int n = s.length();
+        StringBuilder result = new StringBuilder();
+        for(int i=0; i<n; i++) {
+            int count = 1;
+            while((i+1)<n && s.charAt(i) == s.charAt(i+1)) {
+                count++;
+                i++;
+            }
+            result.append(s.charAt(i)).append(count);
+        }
+        return (result.length() < n) ? result.toString() : s;
+    }
+    /**
+     * Compress the string using continous frequency count
+     * string: ABC -> output: ABC
+     * string: AABBBCCTT -> output: A2B3C2T2
+     * Time complexity: O(n)
+     * Approach: using one loop0
+     * @param s
+     * @return
+     */
+    public String compressUtilApproach2(String s) {
+        if(s == null || s.isEmpty())
+            return null;
+        int n = s.length();
+        StringBuilder result = new StringBuilder();
+        char current = s.charAt(0);
+        int count = 1;
+        for(int i=1; i<n; i++) {
+            if(current == s.charAt(i)) {
+                count++;
+            } else {
+                result.append(current).append(count);
+                current = s.charAt(i);
+                count = 1;
+            }
+        }
+        result.append(current).append(count);
+        return (result.length() < n) ? result.toString() : s;
+    }
 }
+
