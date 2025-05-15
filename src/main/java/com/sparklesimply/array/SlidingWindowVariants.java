@@ -276,5 +276,37 @@ public class SlidingWindowVariants {
         return maxSum;
     }
 
+    /**
+     * Problem statement: You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+     * Return the max sliding window.
+     * Time complexity: O(n) every element is processed atmost twice
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        if(n == 0 || k == 0)
+            return nums;
+        Deque<Integer> dq = new ArrayDeque<>();
+        int[] res = new int[n-k+1];
+        int resIndex = 0;
+        for(int i=0; i<n; i++) {
+            // checking if indices are out of bound for window
+            if(!dq.isEmpty() && dq.peekFirst() <=  i-k)
+                dq.pollFirst();
+            // checking if current index value is greater then dq values
+            while(!dq.isEmpty() && nums[dq.peekLast()] < nums[i])
+                dq.pollLast();
+            // adding the next max in decresing to dq
+            dq.offerLast(i);
+            // if window size, add the max value to result
+            if(i>=k-1) {
+                res[resIndex++]=nums[dq.peekFirst()];
+            }
+        }
+        return res;
+    }
+
 
 }
