@@ -74,5 +74,29 @@ public class TraversalVariants {
         result.append(current).append(count);
         return (result.length() < n) ? result.toString() : s;
     }
+
+    /**
+     * Problem statement: A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+     * Given a string s, return true if it is a palindrome, or false otherwise.
+     * Time complexity: O(n)
+     * @param s
+     * @return
+     */
+    public boolean isPalindrome(String s) {
+        StringBuilder updatedString = new StringBuilder();
+        int n = s.length();
+        s = s.toLowerCase();
+        for(int i=0; i<n; i++) {
+            char c = s.charAt(i);
+            if((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))
+                updatedString.append(c);
+        }
+        int len = updatedString.length();
+        for(int i=0, j=len-1; i<=j; i++, j--) {
+            if(updatedString.charAt(i) != updatedString.charAt(j))
+                return false;
+        }
+        return true;
+    }
 }
 
