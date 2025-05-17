@@ -313,4 +313,33 @@ public class Miscellaneous {
         }
         return invCount;
     }
+
+    /**
+     * Problem statement: Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+     * The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+     * The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+     * Approach: idea is to explore all combinations in recursive manner considering elements can be multiple times in possible combinations
+     * Time complexity: O(n^(t/m)), n -> candidates length, t -> target value, m ->minimum value among candidates
+     * @param candidates
+     * @param target
+     * @return
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        combinationSumUtil(candidates, target, 0, new ArrayList<>(), result);
+        return result;
+    }
+    private void combinationSumUtil(int[] candidates, int target, int start, List<Integer> combination, List<List<Integer>> result) {
+        if(target < 0)
+            return;
+        if(target == 0) {
+            result.add(new ArrayList<>(combination));
+        }
+
+        for(int i=start; i<candidates.length; i++) {
+            combination.add(candidates[i]);
+            combinationSumUtil(candidates, target-candidates[i], i, combination, result);
+            combination.remove(combination.size() - 1);
+        }
+    }
 }

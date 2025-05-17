@@ -1,5 +1,7 @@
 package com.sparklesimply.string;
 
+import java.util.*;
+
 public class TraversalVariants {
 
     /**
@@ -97,6 +99,39 @@ public class TraversalVariants {
                 return false;
         }
         return true;
+    }
+
+    /**
+     * Problem statement: Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+     * Time complexity: O(n)
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length())
+            return false;
+        char[] charCount = new char[26];
+        for(int i=0; i<s.length(); i++) {
+            charCount[s.charAt(i) - 'a']++;
+            charCount[t.charAt(i) - 'a']--;
+        }
+        for(int i=0; i<26; i++) {
+            if(charCount[i] != 0)
+                return false;
+        }
+        return true;
+    }
+    public boolean isAnagramBruteApproach(String s, String t) {
+        if(s.length() != t.length())
+            return false;
+        char[] sArray = s.toCharArray();
+        char[] tArray = t.toCharArray();
+        Arrays.sort(sArray);
+        Arrays.sort(tArray);
+        String s1 = new String(sArray);
+        String t1 = new String(tArray);
+        return s1.equals(t1);
     }
 }
 
