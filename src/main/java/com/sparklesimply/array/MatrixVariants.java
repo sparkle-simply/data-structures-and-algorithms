@@ -29,4 +29,31 @@ public class MatrixVariants {
         System.out.println("MaxOnesCount: "+maxOnesCount);
         return maxRowIndex;
     }
+
+    /**
+     * Problem statement: You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+     * You have to rotate the image in-place, which means you have to modify the input 2D matrix directly. DO NOT allocate another 2D matrix and do the rotation.
+     * Approach: Transpose and reverse elements of each row
+     * Time complexity: O(n)
+     * @param matrix
+     */
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for(int i=0; i<n; i++) {
+            for(int j=i+1; j<n; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        int k=0;
+        while(k<n) {
+            for(int i=0, j=n-1; i<=j; i++, j--) {
+                int temp = matrix[k][i];
+                matrix[k][i] = matrix[k][j];
+                matrix[k][j] = temp;
+            }
+            k++;
+        }
+    }
 }
