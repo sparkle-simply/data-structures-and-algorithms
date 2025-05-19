@@ -1,9 +1,9 @@
 #### Problem: Climb Stairs
 ###### Brute force approach:
-- for each step, we'll try noth possitnbilities to climp one step or two step
+- for each step, we'll try both possibilities to climb one step or two step
 - recursively compute both the combination until we reach the top
-- this will lead to recomputation of subproblems multiple times
-- also for each recursive step, we'll be brancing to two way (n-1) (n-2) and this will lead the time complexity of O(2^n)
+- this will lead to re-computation of sub-problems multiple times
+- also for each recursive step, we'll be branching to two-way (n-1) (n-2) and this will lead the time complexity of O(2^n)
 
 ###### Optimized approach:
 - as we know we were recomputing the subproblems multiple times in recursive approach
@@ -42,8 +42,21 @@
 
 ###### Optimized approach:
 - we'll maintain sorted list of increasing subsequence
-- if curr elemnt is greater than the last elemnt of sorted list, then we'll append it to the list
+- if curr element is greater than the last element of sorted list, then we'll append it to the list
 - or else we'll binary search for the smallest ending in sorted list where the curr element is greater and is to be updated
 - iteratively we'll track all elements and size of sorted list will be longest increasing subsequence
 - time complexity: O(n log n)
+***
+#### Problem: Decode ways
+###### Brute force approach:
+- recursively compute all the combinations that are valid in range of (1-25) using current and next character
+- for each step, we'll try both possibilities to count the number of combinations
+- this will lead to re-computation of sub-problems multiple times
+
+###### Optimized approach:
+- as we know we were recomputing the sub-problems multiple times in recursive approach
+- here we will store count of valid combinations in dp array
+- each step we'll check if curr character is non-zero and next character combined with current is valid combination
+- we will iteratively compute dp[i] in reverse order to track curr and next character which count of valid combinations
+- we will be touching each step exactly once, time complexity: O(n)
 ***
