@@ -35,4 +35,26 @@ public class IntervalVariants {
         result.add(newInterval);
         return result.toArray(new int[result.size()][]);
     }
+
+    /**
+     * Problem statement: Given an array of intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+     * Approach: sort intervals on the basis of ending time, check if there is overlap with prev ending >= curr starting, accordingly increment counter
+     * Time complexity: O(n)
+     * @param intervals
+     * @return
+     */
+    public int eraseOverlapIntervals(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> a[1]-b[1]);
+        int[] prev = intervals[0];
+        int count = 0;
+        for(int i=1; i<intervals.length; i++) {
+            int[] curr = intervals[i];
+            if(prev[1] > curr[0]) {
+                count++;
+            } else {
+                prev = curr;
+            }
+        }
+        return count;
+    }
 }

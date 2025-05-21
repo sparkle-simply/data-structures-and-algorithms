@@ -50,4 +50,37 @@ public class FloodFillVariants {
         solveUtil(board, i, j+1, m, n);
         solveUtil(board, i, j-1, m, n);
     }
+
+    /**
+     * Problem statement: Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+     * An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+     * Approach:
+     * using dfs (flood fill) approach, we'll visit each cell -> we'll increment the counter for island for cell having '1' (land) and visit connected components (land part of island) in all four directions
+     * Time complexity: O(m*n)
+     * @param grid
+     * @return
+     */
+    public int numIslands(char[][] grid) {
+        int r = grid.length;
+        int c = grid[0].length;
+        int count = 0;
+        for(int i=0; i<r; i++) {
+            for(int j=0; j<c; j++) {
+                if(grid[i][j] == '1') {
+                    count++;
+                    dfs(grid, i, j, r, c);
+                }
+            }
+        }
+        return count;
+    }
+    void dfs(char[][] grid, int i, int j, int r, int c) {
+        if(i<0 || i>=r || j<0 || j>=c || grid[i][j] != '1')
+            return;
+        grid[i][j] = '0';
+        dfs(grid, i+1, j, r, c);
+        dfs(grid, i-1, j, r, c);
+        dfs(grid, i, j+1, r, c);
+        dfs(grid, i, j-1, r, c);
+    }
 }

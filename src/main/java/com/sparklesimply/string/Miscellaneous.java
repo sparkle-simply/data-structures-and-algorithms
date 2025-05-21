@@ -38,4 +38,32 @@ public class Miscellaneous {
         }
         return result;
     }
+
+    /**
+     * Problem statement: Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+     * Time complexity: O(n)
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for(String word : strs) {
+            char[] wordArray = word.toCharArray();
+            Arrays.sort(wordArray);
+            String newWord = new String(wordArray);
+            if(map.containsKey(newWord)) {
+                map.get(newWord).add(word);
+            } else {
+                List<String> words = new ArrayList<>();
+                words.add(word);
+                map.put(newWord, words);
+            }
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        for(String key : map.keySet()) {
+            result.add(map.get(key));
+        }
+        return result;
+    }
 }

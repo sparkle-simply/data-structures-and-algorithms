@@ -292,4 +292,30 @@ public class TraversalVariants {
         }
         return result;
     }
+
+    /**
+     * Problem statement: Given a reference of a node in a connected undirected graph.
+     * Return a deep copy (clone) of the graph.
+     * Approach: Using dfs and hashmap to create deep copy of existing graph
+     * Time complexity: O(V+E) dfs traversal complexity of visiting all nodes once
+     * @param node
+     * @return
+     */
+    public Node cloneGraph(Node node) {
+        Map<Node, Node> map = new HashMap<>();
+        Node copy = cloneGraphUtil(node, map);
+        return copy;
+    }
+    private Node cloneGraphUtil(Node node, Map<Node, Node> map) {
+        if(node == null)
+            return null;
+        if(map.containsKey(node))
+            return map.get(node);
+        Node copy = new Node(node.val);
+        map.put(node, copy);
+        for(Node neighbor : node.neighbors) {
+            copy.neighbors.add(cloneGraphUtil(neighbor, map));
+        }
+        return copy;
+    }
 }
