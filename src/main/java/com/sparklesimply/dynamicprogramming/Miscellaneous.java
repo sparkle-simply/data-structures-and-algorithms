@@ -39,15 +39,22 @@ public class Miscellaneous {
      * @return true if s can be segmented into space separated sequence of one or more dictionary words
      */
     public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = new HashSet<>(wordDict);
-        StringBuilder sbs = new StringBuilder(s);
-        int n = sbs.length();
+        int n = s.length();
         boolean[] dp = new boolean[n+1];
+
+        // getting the maxLen to prevent non-required iterations
+        int maxLen = 0;
+        for(String t : wordDict) {
+            maxLen = Math.max(maxLen, t.length());
+        }
+
+        // iteratively building solution to check if string ending at (i-1) is segmented in word dictionary
         dp[0] = true;
         for(int i=1; i<=n; i++) {
-            for(int j=0; j<i; j++) {
-                if(dp[j] && set.contains(sbs.substring(j, i))) {
+            for(int j=i-1; j >= Math.max(i-maxLen-1, 0); j--) {
+                if(dp[j] && wordDict.contains(s.substring(j, i))) {
                     dp[i] = true;
+                    break;
                 }
             }
         }
