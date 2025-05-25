@@ -19,21 +19,21 @@ public class CoinChangeVariants {
         int[] dp = new int[amount+1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
-        // traversing coins in reverse order
-        for(int i=coins.length-1; i>=0; i--) {
-            for(int j=1; j<=amount; j++) {
+
+        for(int i=0; i<coins.length; i++) {
+            for(int j = coins[i]; j<=amount; j++) {
+
                 int take = Integer.MAX_VALUE;
                 int noTake = Integer.MAX_VALUE;
 
-                // if we consider to take current coin
-                if(j-coins[i] >= 0 && coins[i] > 0) {
+                // considering picking of coin
+                if(j-coins[i] >= 0) {
                     take = dp[j-coins[i]];
-                    // If possible to take coin, increment counter
                     if(take != Integer.MAX_VALUE)
                         take++;
                 }
 
-                // If there are more coins, consider not taking current coin
+                // considering not picking coin when we have more coins
                 if(i+1 < coins.length) {
                     noTake = dp[j];
                 }
@@ -41,7 +41,7 @@ public class CoinChangeVariants {
                 dp[j] = Math.min(take, noTake);
             }
         }
-        return dp[amount] != Integer.MAX_VALUE ? dp[amount] : -1;
+        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
     /**

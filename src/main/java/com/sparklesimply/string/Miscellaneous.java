@@ -66,4 +66,39 @@ public class Miscellaneous {
         }
         return result;
     }
+
+    /**
+     * Given a string containing only the characters (, ), {, }, [ and ], write a function to determine if the input  string has balanced brackets. The brackets must close in the correct order, meaning every opening  bracket has a corresponding closing bracket of the same type and in the correct order.
+     * Input: "{[()]}"  Output: true
+     * Input: "{[(])}" Output: false
+     * Time complexity: O(n)
+     * @param s
+     * @return
+     */
+    boolean isBalanced(String s) {
+        if(s == null)
+            return true;
+        int n = s.length();
+        int countCloseBrackets = 0;
+        Stack<Character> st = new Stack<>();
+        for(int i=0; i<n; i++) {
+            char c = s.charAt(i);
+            if(c == '(' || c == '{' || c == '[') {
+                st.push(c);
+            } else if(!st.isEmpty() && st.peek() == '(' && c == ')') {
+                st.pop();
+            } else if(!st.isEmpty() && st.peek() == '{' && c == '}') {
+                st.pop();
+            } else if(!st.isEmpty() && st.peek() == '[' && c == ']') {
+                st.pop();
+            } else {
+                if(c == ')' || c == '}' || c == ']')
+                    countCloseBrackets++;
+            }
+        }
+
+        if(countCloseBrackets == n)
+            return false;
+        return st.isEmpty();
+    }
 }

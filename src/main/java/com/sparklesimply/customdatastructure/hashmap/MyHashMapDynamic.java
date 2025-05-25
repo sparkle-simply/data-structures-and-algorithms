@@ -1,21 +1,21 @@
-package com.sparklesimply.customdatastructure.hashtable;
+package com.sparklesimply.customdatastructure.hashmap;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * HashTable in Java is collection class that implements Map interface, provides a way to store <key, value> pairs where key is unique.
- * It's synchronized, thread safe and can be used efficiently in concurrent applications.
- * Internally, HashTable uses hash table to store key value pairs. A hash table uses hash function to compute the index (pointing to the corresponding bucket) based on key's hashCode to determine the placement of key-value pairs
+ * HashMap in Java is collection class that implements Map interface, provides a way to store <key, value> pairs where key is unique and maybe null.
+ * It's non synchronized, not thread safe and can be used efficiently in single threaded applications.
+ * Internally, HashMap uses hash table to store key value pairs. A hash table uses hash function to compute the index (pointing to the corresponding bucket) based on key's hashCode to determine the placement of key-value pairs
  * The better the distribution, better the performance
  */
-public class MyHashtableDynamic {
+public class MyHashMapDynamic {
     private static final int INITIAL_CAPACITY = 20;
     private static final float LOAD_FACTOR_THRESHOLD = 0.75f;
     private LinkedList<Entry>[] table;
     private int size;
 
-    public MyHashtableDynamic() {
+    public MyHashMapDynamic() {
         this.table = new LinkedList[INITIAL_CAPACITY];
         for(int i=0; i< table.length; i++) {
             this.table[i] = new LinkedList<Entry>();
@@ -24,6 +24,9 @@ public class MyHashtableDynamic {
     }
 
     private int hash(Object key) {
+        // hashing key to 0 for null value
+        if(key == null)
+            return 0;
         return (Math.abs(key.hashCode()) % this.table.length);
     }
 
@@ -31,10 +34,13 @@ public class MyHashtableDynamic {
         int newCapacity = this.table.length * 2;
         LinkedList<Entry>[] newTable = new LinkedList[newCapacity];
 
+        for(int i=0; i<newCapacity; i++)
+            newTable[i] = new LinkedList<Entry>();
+
         for(LinkedList<Entry>  bucket : this.table) {
             for(Entry entry : bucket) {
-                int newBuncketIndex = Math.abs(entry.key.hashCode()) % newCapacity;
-                newTable[newBuncketIndex].add(entry);
+                int newBucketIndex = entry.key == null ? 0 : Math.abs(entry.key.hashCode()) % newCapacity;
+                newTable[newBucketIndex].add(entry);
             }
         }
 
@@ -43,14 +49,14 @@ public class MyHashtableDynamic {
     }
 
     public void put(Object key, Object value) {
-        if ((float) size / this.table.length > LOAD_FACTOR_THRESHOLD) {
+        if ((float) this.size / this.table.length > LOAD_FACTOR_THRESHOLD) {
             this.resize();
         }
         int bucketIndex = this.hash(key);
         List<Entry> bucket = this.table[bucketIndex];
 
         for(Entry entry : bucket) {
-            if(entry.key.equals(key)) {
+            if(key == null ? entry.key == null : entry.key.equals(key)) {
                 entry.value = value;
                 return;
             }
@@ -64,7 +70,7 @@ public class MyHashtableDynamic {
         int bucketIndex = hash(key);
         List<Entry> bucket = this.table[bucketIndex];
         for(Entry entry : bucket) {
-            if(entry.key.equals(key)) {
+            if(key == null ? entry.key == null : entry.key.equals(key)) {
                 return entry.value;
             }
         }
@@ -75,7 +81,7 @@ public class MyHashtableDynamic {
         int bucketIndex = hash(key);
         List<Entry> bucket = this.table[bucketIndex];
         for(Entry entry : bucket) {
-            if(entry.key.equals(key)) {
+            if(key == null ? entry.key == null : entry.key.equals(key)) {
                 bucket.remove(entry);
                 this.size--;
                 return;
