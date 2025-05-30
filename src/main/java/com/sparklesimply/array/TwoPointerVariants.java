@@ -126,4 +126,60 @@ public class TwoPointerVariants {
 
     }
 
+    /**
+     * Problem statement: Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+     * Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+     * Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+     * Return k.
+     * Approach: we'll use two pointers, whenever we'll encounter new value while iterating nums array with i -> update j and update nums[j] with new encountered value nums[i]
+     * Time complexity: O(n)
+     * @param nums
+     * @return
+     */
+    public int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        int i = 0, j = 0;
+        while(i<n) {
+            if(nums[i] != nums[j]) {
+                j++;
+                nums[j] = nums[i];
+            }
+            i++;
+        }
+        return j+1;
+    }
+
+    /**
+     * Problem statement: Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that each unique element appears at most twice. The relative order of the elements should be kept the same.
+     * Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
+     * Return k after placing the final result in the first k slots of nums.
+     * Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
+     * Time complexity: O(n)
+     * @param nums
+     * @return
+     */
+    public int removeWithAtmostTwoDuplicates(int[] nums) {
+        int n = nums.length;
+        if(n<=2)
+            return n;
+        int i = 1, j = 0, k = 1;
+        while(i<n) {
+            // if current number is same as previous
+            if(nums[i] == nums[i-1]) {
+                if(k<2) { // checking if we have seen less than 2 occurrance
+                    j++;
+                    nums[j] = nums[i];
+                    k++;
+                }
+            } else {
+                // if current number is different from previous, updating the first occurance
+                j++;
+                nums[j] = nums[i];
+                k = 1;
+            }
+            i++;
+        }
+        return j+1;
+    }
+
 }
