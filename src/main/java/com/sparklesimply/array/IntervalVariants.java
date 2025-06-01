@@ -57,4 +57,22 @@ public class IntervalVariants {
         }
         return count;
     }
+
+    ArrayList<Interval> mergeIntervals(ArrayList<Interval> intervals) {
+        Collections.sort(intervals, (i1, i2) -> i1.start - i2.start);
+        ArrayList<Interval> result = new ArrayList<>();
+        Interval prev = intervals.get(0);
+        int n = intervals.size();
+        for(int i=1; i<n; i++) {
+            Interval curr = intervals.get(i);
+            if(prev.end >= curr.start) {
+                prev.end = Math.max(prev.end, curr.end);
+            } else {
+                result.add(prev);
+                prev = curr;
+            }
+        }
+        result.add(prev);
+        return result;
+    }
 }

@@ -117,17 +117,50 @@ public class MaximizeMinimizeVariants {
      * @param nums amount in n houses
      * @return maximum amount as part of robbing houses
      */
-    public int rob(int[] nums) {
+    public long houseRobberUtil(int[] nums) {
         int n = nums.length;
+        if(n == 0)
+            return 0L;
         if(n == 1)
-            return nums[0];
-        int[] dp = new int [n];
+            return (long) nums[0];
+        int[] dp = new int[n];
         dp[0] = nums[0];
         dp[1] = Math.max(nums[0], nums[1]);
         for(int i=2; i<n; i++) {
             dp[i] = Math.max(dp[i-1], nums[i]+dp[i-2]);
         }
         return dp[n-1];
+    }
+
+    /**
+     * Problem statement: Mr. X is a professional robber planning to rob houses along a street. Each house has a certain amount of money hidden.
+     * All houses along this street are arranged in a circle. That means the first house is the neighbour of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses are broken into on the same night.
+     * You are given an array/list of non-negative integers 'ARR' representing the amount of money of each house. Your task is to return the maximum amount of money Mr. X can rob tonight without alerting the police.
+     * Approach: reusing linear house robbing flow and considering two scenarios where we skip first and last house to calculate the maximum robbed amount
+     * Time complexity: O(n)
+     * @param valueInHouse amount in n houses circularly connected
+     * @return amount as part of robbing houses
+     */
+    long houseRobber(int[] valueInHouse) {
+        int n = valueInHouse.length;
+        if(n==0)
+            return 0L;
+        if(n==1)
+            return (long) valueInHouse[0];
+
+        // houses are connected in circular way
+        int[] case1 = new int[n-1];
+        int[] case2 = new int[n-1];
+
+        // skipping last house to rob
+        System.arraycopy(valueInHouse, 0, case1, 0, n-1);
+        // skipping first house to rob
+        System.arraycopy(valueInHouse, 1, case2, 0, n-1);
+
+        long max1 = houseRobberUtil(case1);
+        long max2 = houseRobberUtil(case2);
+
+        return Math.max(max1, max2);
     }
 
     /**
