@@ -342,4 +342,30 @@ public class Miscellaneous {
             combination.remove(combination.size() - 1);
         }
     }
+
+    /**
+     * Problem statement: There are ‘N’ people at a party. Each person has been assigned a unique id between 0 to 'N' - 1(both inclusive). A celebrity is a person who is known to everyone but does not know anyone at the party.
+     * Given a helper function ‘knows(A, B)’, It will returns "true" if the person having id ‘A’ know the person having id ‘B’ in the party, "false" otherwise. Your task is to find out the celebrity at the party. Print the id of the celebrity, if there is no celebrity at the party then print -1.
+     * Approach: O(n)
+     * @param n
+     * @return
+     */
+    int findCelebrity(int n) {
+        // checking for the candidate for celebrity
+        int candidate = 0;
+        for(int i=0; i<n; i++) {
+            if(Runner.knows(candidate, i)) {
+                candidate = i;
+            }
+        }
+        // checking if candidate is actually the celebrity
+        for(int i=0; i<n; i++) {
+            if(i != candidate) {
+                // checking if candidate know i OR i doesn't knows candidate then candidate is not celebrity
+                if(Runner.knows(candidate, i) || !Runner.knows(i, candidate))
+                    return -1;
+            }
+        }
+        return candidate;
+    }
 }
