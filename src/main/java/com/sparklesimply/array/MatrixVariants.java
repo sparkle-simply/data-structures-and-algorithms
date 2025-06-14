@@ -56,4 +56,33 @@ public class MatrixVariants {
             k++;
         }
     }
+
+    /**
+     * Problem statement: Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
+     * Time complexity: O(m*n)
+     * @param matrix
+     */
+    public void setZeroes(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[] row = new int[m];
+        int[] col = new int[n];
+        // calculating row and col where 0 is present
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                if(matrix[i][j] == 0) {
+                    row[i] = 1;
+                    col[j] = 1;
+                }
+            }
+        }
+        // if current row or col is 1 (with 0) then mark element of current row or col  as 0 while matrix traversal
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                if(row[i] == 1 || col[j] == 1) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
 }
