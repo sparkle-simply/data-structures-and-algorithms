@@ -1,5 +1,7 @@
 package com.sparklesimply.array;
 
+import java.util.*;
+
 public class TraversalVariants {
 
     /**
@@ -45,6 +47,28 @@ public class TraversalVariants {
         for(int i=0; i<n; i++)
             trackResult[i] = trackForward[i]*trackBackward[i];
         return trackResult;
+    }
+
+    /**
+     * Problem statement: Given an integer array nums of unique elements, return all possible subsets (the power set).
+     * The solution set must not contain duplicate subsets. Return the solution in any order.
+     * Approach: using backtrack explore all possible combinations
+     * Time complexity: O(2^n)
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backTrackNums(result, new  ArrayList<Integer>(), nums, 0);
+        return result;
+    }
+    private void backTrackNums(List<List<Integer>> result, List<Integer> combination, int[] nums, int start) {
+        result.add(new ArrayList<>(combination));
+        for(int i=start; i<nums.length; i++) {
+            combination.add(nums[i]);
+            backTrackNums(result, combination, nums, i+1);
+            combination.remove(combination.size()-1);
+        }
     }
 
 }
