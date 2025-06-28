@@ -73,6 +73,38 @@ public class CombinationVariants {
                 combination.remove(combination.size()-1);
             }
         }
+    }
 
+    /**
+     * Problem statement: Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+     * Approach: using backtracking, check for possible palindromes
+     * Time complexity: O(n*2^n)
+     * @param s
+     * @return
+     */
+    public List<List<String>> partition(String s) {
+        List<List<String>> result = new ArrayList<>();
+        backTrackPalin(result, new ArrayList<>(), 0, s);
+        return result;
+    }
+    private void backTrackPalin(List<List<String>> result, List<String> combination, int start, String s) {
+        if(start == s.length()) {
+            result.add(new ArrayList<>(combination));
+            return;
+        }
+        for(int end = start+1; end <= s.length(); end++) {
+            if(isPalin(s, start, end-1)) {
+                combination.add(s.substring(start, end));
+                backTrackPalin(result, combination, end, s);
+                combination.remove(combination.size()-1);
+            }
+        }
+    }
+    private boolean isPalin(String s, int start, int end) {
+        while(start < end) {
+            if(s.charAt(start++) != s.charAt(end--))
+                return false;
+        }
+        return true;
     }
 }
