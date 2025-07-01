@@ -313,4 +313,25 @@ public class TraversalVariants {
         }
         return slow;
     }
+
+    /**
+     * Problem statement: Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+     * Time complexity: O(n)
+     * @param head
+     * @param val
+     * @return
+     */
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode temp = dummy;
+        while(temp.next != null) {
+            if(temp.next.val == val) {
+                temp.next = temp.next.next;
+            } else {
+                temp = temp.next;
+            }
+        }
+        return dummy.next;
+    }
 }
