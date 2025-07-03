@@ -136,4 +136,37 @@ public class CombinationVariants {
             combination.remove(combination.size()-1);
         }
     }
+
+    /**
+     * Problem statement: Given a string expression of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. You may return the answer in any order.
+     * Time complexity: O(2^n)
+     * @param expression
+     * @return
+     */
+    public List<Integer> diffWaysToCompute(String expression) {
+        List<Integer> result = new ArrayList<>();
+        for(int i=0; i<expression.length(); i++) {
+            if(expression.charAt(i) == '+' || expression.charAt(i) == '-' || expression.charAt(i) == '*') {
+                List<Integer> leftList = diffWaysToCompute(expression.substring(0, i));
+                List<Integer> rightList = diffWaysToCompute(expression.substring(i+1));
+
+                for(int left : leftList) {
+                    for(int right : rightList) {
+                        int current;
+                        switch(expression.charAt(i)) {
+                            case '+' : current = left + right; break;
+                            case '-' : current = left - right; break;
+                            case '*' : current = left * right; break;
+                            default: current = 0;
+                        }
+                        result.add(current);
+                    }
+                }
+            }
+        }
+        if(result.size() == 0) {
+            result.add(Integer.valueOf(expression));
+        }
+        return result;
+    }
 }
