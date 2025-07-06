@@ -71,4 +71,29 @@ public class TraversalVariants {
             end--;
         }
     }
+
+    /**
+     * Problem statement: Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+     * Time complexity: O(n)
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isSubsequence(String s, String t) {
+        int i=0, j=0;
+        int ns = s.length();
+        if(ns == 0)
+            return true;
+        int nt = t.length();
+        while (i<ns && j<nt) {
+            if(s.charAt(i) == t.charAt(j)) {
+                i++; j++;
+            }
+            else
+                j++;
+            if(i == ns)
+                return true;
+        }
+        return false;
+    }
 }
