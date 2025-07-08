@@ -126,4 +126,30 @@ public class Miscellaneous {
         }
         return st.isEmpty();
     }
+
+    /**
+     * Problem statement: Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+     * Each letter in magazine can only be used once in ransomNote.
+     * Approac h: using hashmap to capture magazine characters and checking with ransome note
+     * Other approach can be using counter char array
+     * Time complexity: O(n)
+     * @param ransomNote
+     * @param magazine
+     * @return
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        if(ransomNote.length() > magazine.length())
+            return false;
+        Map<Character, Integer> hm = new HashMap<>();
+        for(char c : magazine.toCharArray()) {
+            hm.put(c, hm.getOrDefault(c, 0)+1);
+        }
+        for(char c : ransomNote.toCharArray()) {
+            if(hm.get(c) == null || hm.get(c) <= 0)
+                return false;
+            hm.put(c, hm.getOrDefault(c, 0)-1);
+
+        }
+        return true;
+    }
 }
