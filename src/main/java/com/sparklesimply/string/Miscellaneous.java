@@ -130,7 +130,7 @@ public class Miscellaneous {
     /**
      * Problem statement: Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
      * Each letter in magazine can only be used once in ransomNote.
-     * Approac h: using hashmap to capture magazine characters and checking with ransome note
+     * Approach: using hashmap to capture magazine characters and checking with ransome note
      * Other approach can be using counter char array
      * Time complexity: O(n)
      * @param ransomNote
@@ -149,6 +149,39 @@ public class Miscellaneous {
                 return false;
             hm.put(c, hm.getOrDefault(c, 0)-1);
 
+        }
+        return true;
+    }
+
+    /**
+     * Problem statement: Given a pattern and a string s, find if s follows the same pattern.
+     * Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.
+     * Time complexity: O(n)
+     * @param pattern
+     * @param s
+     * @return
+     */
+    public boolean wordPattern(String pattern, String s) {
+        String[] words = s.split("\\s");
+        if(pattern.length() != words.length)
+            return false;
+        Map<Character, String> map1 = new HashMap<>();
+        Map<String, Character> map2 = new HashMap<>();
+        for(int i=0; i<pattern.length(); i++) {
+            char c = pattern.charAt(i);
+            String word = words[i];
+
+            if(!map1.containsKey(c)) {
+                map1.put(c, word);
+            } else if(!map1.get(c).equals(word)) {
+                return false;
+            }
+
+            if(!map2.containsKey(word)) {
+                map2.put(word, c);
+            } else if(map2.get(word) != c) {
+                return false;
+            }
         }
         return true;
     }
