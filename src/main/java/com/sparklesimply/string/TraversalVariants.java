@@ -133,5 +133,40 @@ public class TraversalVariants {
         String t1 = new String(tArray);
         return s1.equals(t1);
     }
+
+
+    /**
+     * Roman to Integer
+     * Time complexity: O(n)
+     * @param s
+     * @return
+     */
+    public int romanToInt(String s) {
+        int n = s.length();
+        int result = 0;
+        for(int i=0; i<n; i++) {
+            int current = decode(s.charAt(i));
+            // if there are more characters and current value is less the next one
+            if((i+1)<n && current < decode(s.charAt(i+1))) {
+                result -= current;
+            } else {
+                result += current;
+            }
+        }
+        return result;
+    }
+    private int decode(char c) {
+        switch(c) {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+            default: return -1;
+        }
+    }
+
 }
 
