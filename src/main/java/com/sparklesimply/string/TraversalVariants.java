@@ -168,5 +168,28 @@ public class TraversalVariants {
         }
     }
 
+    /**
+     * Problem statement: Given a string s consisting of words and spaces, return the length of the last word in the string.
+     * Time complexity: O(n)
+     * @param s
+     * @return
+     */
+    public int lengthOfLastWord(String s) {
+        // Naive approach:
+        // String[] words = s.split("\\s+");
+        // return words[words.length-1].length();
+
+        // Optimized approach:
+        String trimString = s.trim();
+        int n = trimString.length();
+        int count = 0;
+        for(int i=n-1; i>=0; i--) {
+            if(trimString.charAt(i) == ' ')
+                break;
+            count++;
+        }
+        return count;
+    }
+
 }
 
