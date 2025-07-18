@@ -191,5 +191,31 @@ public class TraversalVariants {
         return count;
     }
 
+    /**
+     * Problem statement: Given two strings s and t, determine if they are isomorphic.
+     * Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+     * All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+     * Time complexity: O(n)
+     * @param s
+     * @param t
+     * @return
+     */
+    public boolean isIsomorphic(String s, String t) {
+        String encodeS = encode(s);
+        String encodeT = encode(t);
+        return encodeS.equals(encodeT);
+    }
+    private String encode(String str) {
+        Map<Character, Integer> hm = new HashMap<>();
+        int i = 0;
+        StringBuilder res = new StringBuilder();
+        for(char c : str.toCharArray()) {
+            if(!hm.containsKey(c))
+                hm.put(c, i++);
+            res.append(hm.get(c) + '0');
+        }
+        return res.toString();
+    }
+
 }
 
