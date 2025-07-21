@@ -543,4 +543,31 @@ public class TraversalVariants {
             return false;
         return isSame(root.left, subRoot.left) && isSame(root.right, subRoot.right);
     }
+
+    /**
+     * Problem statement: Right view of binary tree
+     * @param root
+     * @return
+     */
+    public static ArrayList<Integer> printRightView(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if(root == null)
+            return result;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()) {
+            int n = q.size();
+            for(int i=0; i<n; i++) {
+                TreeNode temp = q.poll();
+                if(i == n-1)
+                    result.add(temp.data);
+
+                if(temp.left != null)
+                    q.add(temp.left);
+                if(temp.right != null)
+                    q.add(temp.right);
+            }
+        }
+        return result;
+    }
 }
