@@ -570,4 +570,59 @@ public class TraversalVariants {
         }
         return result;
     }
+
+    /**
+     * Problem statement: Figure out the boundary nodes of this binary tree in an Anti-Clockwise direction starting from the root node.
+     * Time complexity: O(n)
+     * @param root
+     * @return
+     */
+    public List<Integer> traverseBoundary(TreeNode root){
+        List<Integer> result = new ArrayList<Integer>();
+        if(root == null)
+            return result;
+        if(!Utility.isLeaf(root))
+            result.add(root.data);
+        collectLeftNodes(root.left, result);
+        collectLeafNodes(root, result);
+        collectRightNodes(root.right, result);
+        return result;
+    }
+    private void collectLeftNodes(TreeNode root, List<Integer> result) {
+        if(root == null)
+            return;
+        TreeNode temp = root;
+        while(!Utility.isLeaf(temp)) {
+            result.add(temp.data);
+            if(temp.left != null)
+                temp = temp.left;
+            else
+                temp = temp.right;
+        }
+    }
+    private void collectRightNodes(TreeNode root, List<Integer> result) {
+        if(root == null)
+            return;
+        List<Integer> tempList = new ArrayList<Integer>();
+        TreeNode temp = root;
+        while(!Utility.isLeaf(temp)) {
+            tempList.add(temp.data);
+            if(temp.right != null)
+                temp = temp.right;
+            else
+                temp = temp.left;
+        }
+        for(int i=tempList.size()-1; i>=0; i--)
+            result.add(tempList.get(i));
+    }
+    private void collectLeafNodes(TreeNode root, List<Integer> result) {
+        if(root == null)
+            return;
+        if(Utility.isLeaf(root)) {
+            result.add(root.data);
+            return;
+        }
+        collectLeafNodes(root.left, result);
+        collectLeafNodes(root.right, result);
+    }
 }
