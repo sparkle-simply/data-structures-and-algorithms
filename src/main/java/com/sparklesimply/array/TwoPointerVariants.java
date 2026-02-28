@@ -181,5 +181,22 @@ public class TwoPointerVariants {
         }
         return j+1;
     }
+    // Approach 2 with cleaner code
+    public int removeWithAtmostTwoDuplicates(int[] nums) {
+        int n = nums.length;
+        if(n<=2)
+            return n;
+        int i = 2, j = 2; // first two elements are always allowed
+        while(i<n) {
+            // if current number is different previous-2 number
+            if(nums[i] != nums[j-2]) {
+                nums[j] = nums[i];
+                j++;
+            }
+            i++;
+        }
+        return j;
+    }
+
 
 }
