@@ -186,6 +186,10 @@ public class Miscellaneous {
         return true;
     }
 
+    /**
+     * You are given two non-negative integers, ‘NUM1’ and ‘NUM2’, in the form of strings. Return the sum of both strings.
+     * Time complexity: O(n)
+     */
     public static String stringConcatenation(String num1, String num2) {
 
         if(num1.length() > num2.length()) {
