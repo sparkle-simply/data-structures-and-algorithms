@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 public class SortVariants {
 
+    /**
+     * You are given a 0-indexed array ‘NUMS’ consisting of ‘N’ integers.
+     * Sort the array ‘NUMS’ in such a way that the first half of the array contains only odd numbers sorted in non-increasing order
+     * and the second half contains only even numbers sorted in non-decreasing order.
+     * Time complexity: O(n log n)
+     */
     public static void sortOddEven(int[] nums) {
         if(nums.length < 2)
             return;
