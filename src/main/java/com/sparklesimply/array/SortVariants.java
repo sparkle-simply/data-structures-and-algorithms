@@ -35,6 +35,10 @@ public class SortVariants {
         Arrays.sort(nums, oddCount, nums.length);
     }
 
+    /**
+     * You have been given an integer array/list(ARR) of size 'N'. It only contains 0s, 1s and 2s.
+     * Time complexity: O(n)
+     */
     public static void sort012(int[] arr)
     {
         int n = arr.length;
