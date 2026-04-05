@@ -34,4 +34,21 @@ public class SortVariants {
         // sorting remaining even numbers in non-decreasing order
         Arrays.sort(nums, oddCount, nums.length);
     }
+
+    public static void sort012(int[] arr)
+    {
+        int n = arr.length;
+        int[] count = new int[3];
+
+        for(int i=0; i<n; i++) {
+            count[arr[i]]++;
+        }
+        int k = 0;
+        for(int i=0; i<3; i++) {
+            while(count[i]-->0) {
+                arr[k] = i;
+                k++;
+            }
+        }
+    }
 }
