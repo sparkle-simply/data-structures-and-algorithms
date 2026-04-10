@@ -64,7 +64,7 @@ public class SortVariants {
 		for(int i=0; i<n; i++) {
             // if arr[i] is within the range [1, n] and arr[i]
             // is not placed at (arr[i]-1)th index in arr
-            while(arr[i]>=1 && arr[i]<n && arr[i] != arr[arr[i]-1])	{
+            while(arr[i]>=1 && arr[i]<=n && arr[i] != arr[arr[i]-1])	{
                 // then swap arr[i] and arr[arr[i]-1] to
                 // place arr[i] to its corresponding index
                 int temp = arr[i];
