@@ -1,23 +1,23 @@
 package com.sparklesimply.array;
 
+import java.util.ArrayList;
+
 /**
  * @author Simran Sharma (<a href="https://github.com/sparkle-simply">GitHub Profile</a>)
  */
 public class MatrixVariants {
 
     /**
-     * This method finds the row having a maximum number of 1s in a binary matrix where each row is sorted
+     * Approach1: This method finds the row having a maximum number of 1s in a binary matrix where each row is sorted
      * Time complexity: O(m+n) every column is visited atmost once
-     * @param mat
-     * @return
      */
-    public int rowWithMaxOnes(int[][] mat) {
+    public int rowWithMaxOnesApproach1(int[][] mat) {
         int m = mat.length;
         int n = mat[0].length;
 
         int j = n-1;
         int maxOnesCount = 0;
-        int maxRowIndex = 0;
+        int maxRowIndex = -1;
         for(int i=0; i<m; i++) {
             while(j>=0 && mat[i][j] == 1) {
                 j--;
@@ -27,6 +27,26 @@ public class MatrixVariants {
         }
         System.out.println("MaxRowIndex: "+maxRowIndex);
         System.out.println("MaxOnesCount: "+maxOnesCount);
+        return maxRowIndex;
+    }
+
+    /**
+     * Approach2: You are given a 2D matrix 'ARR' (containing either ‘0’ or ‘1’) of size 'N' x 'M', where each row is in sorted order.
+     * Find the 0-based index of the first row with the maximum number of 1's.
+     * Time complexity: O(n+m)
+     */
+    public static int maximumOnesRowApproach2(ArrayList<ArrayList<Integer>> matrix, int n, int m)
+    {
+        int maxRowIndex = -1;
+        int i=0, j=m-1;
+        while(i<n && j>=0) {
+            if(matrix.get(i).get(j) == 1) {
+                j--;
+                maxRowIndex = i;
+            } else {
+                i++;
+            }
+        }
         return maxRowIndex;
     }
 
