@@ -32,4 +32,15 @@ public class SubstringVariants {
         System.out.println(s.substring(maxStart, maxStart+maxLen));
         return maxLen;
     }
+
+    /**
+     * Check If One String Is A Rotation Of Another String
+     * Time complexity: O(n)
+     */
+    public static int isCyclicRotation(String p, String q)  {
+        if(p.length() != q.length())
+            return 0;
+        String doubleP = p + p;
+        return doubleP.contains(q) ? 1 : 0;
+    }
 }
