@@ -20,4 +20,17 @@ public class BSTVariants {
             return lowestCommonAncestor(root.right, p, q);
         return root;
     }
+
+    public static int floorInBST(TreeNode root, int x) {
+        int floorValue = -1;
+        while(root != null) {
+            if(root.data > x) {
+                root = root.left;
+            } else {
+                floorValue = root.data;
+                root = root.right;
+            }
+        }
+        return floorValue;
+    }
 }
