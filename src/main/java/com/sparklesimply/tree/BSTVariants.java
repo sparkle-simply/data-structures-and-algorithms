@@ -21,6 +21,11 @@ public class BSTVariants {
         return root;
     }
 
+    /**
+     * You are given a BST (Binary search tree) with’ N’ number of nodes and a value ‘X’.
+     * Your task is to find the greatest value node of the BST which is smaller than or equal to ‘X’.
+     * Time complexity: O(h) where h -> height of BST
+     */
     public static int floorInBST(TreeNode root, int x) {
         int floorValue = -1;
         while(root != null) {
