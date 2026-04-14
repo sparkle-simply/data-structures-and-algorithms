@@ -58,6 +58,21 @@ public class IntervalVariants {
         return count;
     }
 
+    public static int minimumReschedules(int n, int[][] intervals) {
+        Arrays.sort(intervals, (i1, i2) -> (i1[1] -i2[1]));
+        int[] prev = intervals[0];
+        int numberOfRechedules = 0;
+        for(int i=1; i<intervals.length; i++) {
+            int[] curr = intervals[i];
+            if(prev[1] > curr[0]) {
+                numberOfRechedules++;
+            } else {
+                prev = curr;
+            }
+        }
+        return numberOfRechedules;
+    }
+
     ArrayList<Interval> mergeIntervals(ArrayList<Interval> intervals) {
         Collections.sort(intervals, (i1, i2) -> i1.start - i2.start);
         ArrayList<Interval> result = new ArrayList<>();
