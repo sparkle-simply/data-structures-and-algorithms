@@ -38,7 +38,7 @@ public class IntervalVariants {
 
     /**
      * Problem statement: Given an array of intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
-     * Approach: sort intervals on the basis of ending time, check if there is overlap with prev ending >= curr starting, accordingly increment counter
+     * Approach: sort intervals on the basis of ending time, check if there is overlap with prev ending > curr starting, accordingly increment counter
      * Time complexity: O(n)
      * @param intervals
      * @return
@@ -58,6 +58,15 @@ public class IntervalVariants {
         return count;
     }
 
+    /**
+     * Problem statement: Ninja is the steel factory owner, and there are 'N' workers working at that factory.
+     * Each worker has his own working time, and it is provided in the array 'intervals'
+     * where 'INTERVALS[i][0]' gives the start time of the 'i'th worker and 'INTERVALS[i][1]' gives the end time of
+     * the 'i'th worker. Ninja does not want to allow more than one worker to work at the same time,
+     * so he needs your help to find the minimum number of workers he needs to reschedule their work time so as there
+     * are non-overlapping working times in any two workers.
+     * Time complexity: O(n)
+     */
     public static int minimumReschedules(int n, int[][] intervals) {
         Arrays.sort(intervals, (i1, i2) -> (i1[1] -i2[1]));
         int[] prev = intervals[0];
