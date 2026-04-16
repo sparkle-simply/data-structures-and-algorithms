@@ -99,4 +99,20 @@ public class IntervalVariants {
         result.add(prev);
         return result;
     }
+
+    public static int disjointIntervals(ArrayList<ArrayList<Integer>> arr, int n) {
+        if(arr == null || arr.size() < 1)
+            return 0;
+        Collections.sort(arr, (a,b) -> Integer.compare(a.get(1),b.get(1)));
+        int disjointCount = 1;
+        int lastEndTime = arr.get(0).get(1);
+        for(int i=1; i<arr.size(); i++) {
+            int currStartTime = arr.get(i).get(0);
+            if(currStartTime > lastEndTime) {
+                disjointCount++;
+                lastEndTime = arr.get(i).get(1);
+            }
+        }
+        return disjointCount;
+    }
 }
