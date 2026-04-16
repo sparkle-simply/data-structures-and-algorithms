@@ -100,6 +100,14 @@ public class IntervalVariants {
         return result;
     }
 
+    /**
+     * Problem statement: Given a 2D array of size Nx2 which contains a set of ‘N’ intervals.
+     * Each interval contains a starting point and an ending point.
+     * You need to find the size of the maximal set of mutually disjoint intervals.
+     * Two sets [a,b] and [c,d] are disjoint intervals if there is no common point between these two intervals.
+     * For example: [5,7] and [8,10] are disjoint intervals but the intervals [5,7] and [7,10] is not a disjoint interval as they have a common point, 7 in them.
+     * Time complexity: O(n log n)
+     */
     public static int disjointIntervals(ArrayList<ArrayList<Integer>> arr, int n) {
         if(arr == null || arr.size() < 1)
             return 0;
