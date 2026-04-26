@@ -82,7 +82,13 @@ public class MedianVariants {
         }
     }
 
-
+    /**
+     * Problem statement: Given a row-wise sorted matrix having N number of rows and M number of columns.
+     * Your task is to find the median of the given matrix.
+     * Note:
+     * Assume that the size of the matrix N*M is always odd.
+     * Time complexity: O(n log m) using binary search on the value range.
+     */
     public static int findMedianInMatrixWithSortedRows(int arr[][], int n, int m) {
         int low = Integer.MAX_VALUE;
         int high = Integer.MIN_VALUE;
