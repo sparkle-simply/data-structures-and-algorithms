@@ -81,4 +81,41 @@ public class MedianVariants {
             return m1;
         }
     }
+
+
+    public static int findMedianInMatrixWithSortedRows(int arr[][], int n, int m) {
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+        for(int i=0; i<n; i++) {
+            low = Math.min(low, arr[i][0]);
+            high = Math.max(high, arr[i][m-1]);
+        }
+        int desiredCount = (n*m+1)/2;
+        while(low <= high) {
+            int mid = low + (high - low)/2;
+            int count = 0;
+            for(int i=0; i<n; i++) {
+                count += upperBound(arr[i], m, mid);
+            }
+            if(count < desiredCount) {
+                low = mid+1;
+            } else  {
+                high = mid-1;
+            }
+        }
+        return low;
+    }
+    private static int upperBound(int[] row, int n, int target) {
+        int left = 0;
+        int right = n-1;
+        while(left <= right) {
+            int mid = left + (right-left)/2;
+            if(row[mid] <= target) {
+                left = mid + 1;
+            } else {
+                right = mid-1;
+            }
+        }
+        return left;
+    }
 }
